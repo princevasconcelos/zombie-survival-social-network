@@ -15,8 +15,9 @@ export const Container = styled.div`
   display: flex;
   flex-grow: 1;
   justify-content: space-between;
+  align-items: center;
   max-width: 1200px;
-  margin: 0 8px;
+  margin: 0 16px;
 `;
 
 export default StyledHeader;

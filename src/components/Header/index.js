@@ -2,12 +2,19 @@ import React from 'react';
 
 import StyledHeader, { Container } from './styles';
 
+import ResponsiveText from '../ResponsiveText';
+import Search from '../Search';
+
 const Header = () => (
   <StyledHeader>
     <Container>
-      <span>1</span>
-      <span>1</span>
-      <span>1</span>
+      <ResponsiveText
+        zombie
+        forSmallScreen="ZSSN"
+        forLargeScreen="Zombie Survival Social Network"
+      />
+      <Search />
+      <span>Add</span>
     </Container>
   </StyledHeader>
 );
