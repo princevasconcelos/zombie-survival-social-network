@@ -9,9 +9,10 @@ const Header = () => (
   <StyledHeader>
     <Container>
       <ResponsiveText
-        zombie
-        forSmallScreen="ZSSN"
-        forLargeScreen="Zombie Survival Social Network"
+        short="ZSSN"
+        long="Zombie Survival Social Network"
+        color="primary"
+        size="xlarge"
       />
       <Search />
       <span>Add</span>
