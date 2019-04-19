@@ -5,6 +5,7 @@ import API from '../../services/api';
 import StyledMain from './styles';
 
 import Reports from '../Reports';
+import Box from '../Box';
 
 class Main extends React.Component {
   state = {
@@ -39,7 +40,9 @@ class Main extends React.Component {
     } = this.state;
     return (
       <StyledMain>
-        <Reports data={reports} error={reportError} />
+        <Box title="My Profile">
+          <span>legal</span>
+        </Box>
       </StyledMain>
     );
   }
