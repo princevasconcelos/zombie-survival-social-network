@@ -6,14 +6,13 @@ const styles = {
     blacker: '#414143',
     gray: '#dcdcdc',
     lightestGray: '#f2f2f2',
-    darkGray: '#a9a9a9',
   },
   sizes: {
     xlarge: '32px',
     default: '16px',
   },
   screens: {
-    tablet: '800px',
+    tablet: '900px',
     desktop: '1200px',
   },
 };
