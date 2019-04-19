@@ -10,10 +10,6 @@ const StyledSearch = styled.input`
 
   color: ${styles.colors.black};
 
-  ::placeholder {
-    color: ${styles.colors.darkGray};
-  }
-
   :focus {
     outline: none;
 
@@ -27,7 +23,7 @@ export const Container = styled.div`
   display: flex;
   flex: 1 1 auto;
   align-items: center;
-  background-color: ${styles.colors.lightestGray};
+  border: 1px solid ${styles.colors.lightestGray};
   height: 50px;
   border-radius: 8px;
   padding: 0 8px;
