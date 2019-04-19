@@ -1,6 +1,8 @@
 import React from 'react';
 
-import StyledSearch from './styles';
+import StyledSearch, { Container } from './styles';
+
+import Icon from '../Icon';
 
 class Search extends React.Component {
   state = {
@@ -11,7 +13,12 @@ class Search extends React.Component {
 
   render() {
     const { value } = this.state;
-    return <StyledSearch placeholder="Search" onChange={this.handleChange} />;
+    return (
+      <Container>
+        <Icon name="search" />
+        <StyledSearch placeholder="Search" onChange={this.handleChange} />
+      </Container>
+    );
   }
 }
 
