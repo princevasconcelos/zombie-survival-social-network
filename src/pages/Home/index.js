@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Header from '../../components/Header';
+
 class Home extends React.Component {
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(this.onLocationGranted, this.onLocationRejected);
@@ -10,7 +12,12 @@ class Home extends React.Component {
   onLocationRejected = () => console.log('n permitiu');
 
   render() {
-    return <span>Home</span>;
+    return (
+      <>
+        <Header />
+        <span>Home</span>
+      </>
+    );
   }
 }
 
