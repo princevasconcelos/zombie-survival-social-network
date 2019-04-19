@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import styles from '../../utils/constraints';
 
-const StyledHeader = styled.div`
+const StyledHeader = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
