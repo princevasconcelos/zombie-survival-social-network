@@ -4,6 +4,7 @@ import StyledHeader, { Container } from './styles';
 
 import ResponsiveText from '../ResponsiveText';
 import Search from '../Search';
+import Link from '../Link';
 
 const Header = () => (
   <StyledHeader>
@@ -15,7 +16,7 @@ const Header = () => (
         size="xlarge"
       />
       <Search />
-      <span>Add</span>
+      <Link to="register">Create a survivor</Link>
     </Container>
   </StyledHeader>
 );
