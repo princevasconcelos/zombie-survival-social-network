@@ -4,6 +4,8 @@ import API from '../../services/api';
 
 import StyledMain from './styles';
 
+import Reports from '../Reports';
+
 class Main extends React.Component {
   state = {
     reports: [],
@@ -35,15 +37,9 @@ class Main extends React.Component {
     const {
       reports, reportError, survivors, survivorError,
     } = this.state;
-    console.log(reports);
-    console.log(reportError);
-    console.log(survivors);
-    console.log(survivorError);
     return (
       <StyledMain>
-        `Main
-        {reports.length}
-`
+        <Reports data={reports} error={reportError} />
       </StyledMain>
     );
   }
