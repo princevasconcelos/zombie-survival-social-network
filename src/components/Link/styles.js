@@ -9,7 +9,8 @@ const StyledLink = styled(Link)`
   font-weight: bold;
 
   :hover {
-    color: ${styles.colors.secondary};
+    box-shadow: inset 0 -2px ${styles.colors.blacker};
+    padding: 29px 0;
   }
 `;
 
