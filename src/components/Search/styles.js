@@ -3,24 +3,36 @@ import styles from '../../utils/constraints';
 
 const StyledSearch = styled.input`
   background-color: transparent;
-  /* border: 1px solid ${styles.colors.black}; */
   border: none;
   font-size: 18px;
-  margin-left: 8px;
+  width: 100%;
+  margin-left: 4px;
 
   color: ${styles.colors.black};
 
+  ::placeholder {
+    color: ${styles.colors.darkGray};
+  }
+
   :focus {
     outline: none;
+
+    ::placeholder {
+      color: transparent;
+    }
   }
 `;
 
 export const Container = styled.div`
   display: flex;
+  flex: 1 1 auto;
+  align-items: center;
   background-color: ${styles.colors.lightestGray};
-  padding: 10px;
   height: 50px;
   border-radius: 8px;
+  padding: 0 8px;
+  margin: 0 16px;
+  max-width: 430px;
 `;
 
 export default StyledSearch;
