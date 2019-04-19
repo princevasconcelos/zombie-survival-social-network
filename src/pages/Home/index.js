@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Header from '../../components/Header';
+import Main from '../../components/Main';
 
 class Home extends React.Component {
   componentDidMount() {
@@ -15,7 +16,7 @@ class Home extends React.Component {
     return (
       <>
         <Header />
-        <span>Home</span>
+        <Main />
       </>
     );
   }
