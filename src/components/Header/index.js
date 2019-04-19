@@ -16,7 +16,7 @@ const Header = () => (
         size="xlarge"
       />
       <Search />
-      <Link to="register">Create a survivor</Link>
+      <Link to="register">Register</Link>
     </Container>
   </StyledHeader>
 );
