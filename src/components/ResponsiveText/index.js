@@ -1,22 +1,27 @@
 import React from 'react';
 import t from 'prop-types';
 
-import isMobile from '../../utils/functions';
-
-import StyledText from './styles';
+import { ShortText, LongText, Wrapper } from './styles';
 
 const propTypes = {
-  forSmallScreen: t.string.isRequired,
-  forLargeScreen: t.string.isRequired,
-  zombie: t.bool,
+  short: t.string.isRequired,
+  long: t.string.isRequired,
+  color: t.string,
+  size: t.string,
 };
 
 const defaultProps = {
-  zombie: false,
+  color: 'black',
+  size: 'default',
 };
 
-const ResponsiveText = ({ forSmallScreen, forLargeScreen, zombie }) => (
-  <StyledText zombie={zombie}>{isMobile() ? forSmallScreen : forLargeScreen}</StyledText>
+const ResponsiveText = ({
+  short, long, color, size,
+}) => (
+  <Wrapper color={color} size={size}>
+    <ShortText>{short}</ShortText>
+    <LongText>{long}</LongText>
+  </Wrapper>
 );
 
 ResponsiveText.propTypes = propTypes;
