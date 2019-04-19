@@ -11,7 +11,7 @@ const App = () => (
   <Router>
     <GlobalStyle />
     <Route path="/" exact component={Home} />
-    <Route path="/new" component={Profile} />
+    <Route path="/(register|profile)/" component={Profile} />
     <Route path="/trade" component={Trade} />
   </Router>
 );
