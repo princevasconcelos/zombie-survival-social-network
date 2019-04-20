@@ -1,12 +1,26 @@
 import React from 'react';
+import t from 'prop-types';
 
 import { StyledBox, Title } from './styles';
 
-const Box = ({ title, children }) => (
-  <StyledBox>
+const propTypes = {
+  title: t.string.isRequired,
+  children: t.string.isRequired,
+  withBorder: t.bool,
+};
+
+const defaultProps = {
+  withBorder: false,
+};
+
+const Box = ({ title, children, withBorder }) => (
+  <StyledBox withBorder={withBorder}>
     <Title>{title}</Title>
     {children}
   </StyledBox>
 );
+
+Box.propTypes = propTypes;
+Box.defaultProps = defaultProps;
 
 export default Box;
