@@ -16,7 +16,12 @@ class Search extends React.Component {
     return (
       <Container>
         <Icon name="search" />
-        <StyledSearch data-testid="search" placeholder="Search" onChange={this.handleChange} />
+        <StyledSearch
+          data-testid="search"
+          value={value}
+          placeholder="Search"
+          onChange={this.handleChange}
+        />
       </Container>
     );
   }
