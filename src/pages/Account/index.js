@@ -1,7 +1,7 @@
 import React from 'react';
 import t from 'prop-types';
 
-import { Container, Header } from './styles';
+import { Container, Header, Floating } from './styles';
 
 import Profile from '../../components/Profile';
 import Icon from '../../components/Icon';
@@ -15,6 +15,9 @@ class Account extends React.Component {
     match: t.shape({
       params: t.objectOf(t.string),
     }).isRequired,
+    history: t.shape({
+      history: t.func,
+    }).isRequired,
   };
 
   componentDidMount() {
@@ -27,6 +30,11 @@ class Account extends React.Component {
     if (id) this.setState({ id });
   }
 
+  handleClose = () => {
+    const { history } = this.props;
+    history.goBack();
+  };
+
   render() {
     const { id } = this.state;
     return (
@@ -34,7 +42,9 @@ class Account extends React.Component {
         <Header>
           {id ? 'Edit ' : 'New '}
           Survivor
-          <Icon name="close" />
+          <Floating onClick={this.handleClose}>
+            <Icon name="close" />
+          </Floating>
         </Header>
         <Profile />
       </Container>

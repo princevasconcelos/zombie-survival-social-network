@@ -1,22 +1,39 @@
 import styled from 'styled-components';
 
+import styles from '../../utils/constraints';
+
 const Header = styled.header`
   height: 50px;
-  font-size: 42px;
+  font-size: 38px;
   font-weight: bold;
-  border: 1px solid gray;
+  color: ${styles.colors.black};
 `;
 
 const Container = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 1200px;
+  max-width: 800px;
   margin: 0 auto;
 
   padding: 16px 0;
   height: auto;
-  border: 1px solid red;
 `;
 
-export { Header, Container };
+const Floating = styled.div`
+  display: flex;
+  cursor: pointer;
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  opacity: 0.3;
+  width: 32px;
+  height: 32px;
+
+  :hover {
+    opacity: 1;
+  }
+`;
+
+export { Header, Container, Floating };
