@@ -21,11 +21,12 @@ const StyledLabel = styled.label`
 
 const StyledInput = styled.input`
   width: 100%;
-  padding: 8px;
+  flex: 1;
   border-radius: 4px;
   border: 1px solid lightgray;
   padding: 16px;
   font-size: ${styles.sizes.large};
+  color: ${styles.colors.black};
 
   :focus {
     ~ label {
@@ -37,6 +38,7 @@ const StyledInput = styled.input`
 
 const Container = styled.div`
   position: relative;
+  width: 100%;
 `;
 
 export { StyledInput, StyledLabel, Container };

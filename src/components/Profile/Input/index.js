@@ -10,13 +10,25 @@ const propTypes = {
   type: t.string.isRequired,
   name: t.string.isRequired,
   id: t.string.isRequired,
+  readOnly: t.bool,
+};
+
+const defaultProps = {
+  readOnly: false,
 };
 
 const Input = ({
-  value, onChange, label, type, name, id,
+  value, onChange, label, type, name, id, readOnly,
 }) => (
   <Container>
-    <StyledInput value={value} onChange={onChange} type={type} name={name} id={id} />
+    <StyledInput
+      value={value}
+      onChange={onChange}
+      type={type}
+      name={name}
+      id={id}
+      readOnly={readOnly}
+    />
     <StyledLabel htmlFor={id} stayAbove={value}>
       {label}
     </StyledLabel>
@@ -24,5 +36,6 @@ const Input = ({
 );
 
 Input.propTypes = propTypes;
+Input.defaultProps = defaultProps;
 
 export default Input;
