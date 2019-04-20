@@ -5,6 +5,7 @@ import { Container, Header, Floating } from './styles';
 
 import Profile from '../../components/Profile';
 import Icon from '../../components/Icon';
+import Button from '../../components/Button';
 
 class Account extends React.Component {
   state = {
@@ -40,13 +41,15 @@ class Account extends React.Component {
     return (
       <Container>
         <Header>
-          {id ? 'Edit ' : 'New '}
-          Survivor
+          {id ? 'Edit profile' : 'Create new account '}
           <Floating onClick={this.handleClose}>
             <Icon name="close" />
           </Floating>
         </Header>
         <Profile />
+        <Button type="submit" form="profile-form">
+          Save
+        </Button>
       </Container>
     );
   }
