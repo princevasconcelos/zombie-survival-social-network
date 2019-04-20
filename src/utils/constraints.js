@@ -8,9 +8,11 @@ const styles = {
     darkGray: '#a9a9a9',
     gray: '#dcdcdc',
     lightestGray: '#f2f2f2',
+    white: '#FFF',
   },
   sizes: {
     xlarge: '32px',
+    large: '18px',
     default: '16px',
   },
   screens: {
