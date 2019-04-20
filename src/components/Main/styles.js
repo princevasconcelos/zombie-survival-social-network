@@ -6,7 +6,6 @@ const StyledMain = styled.main`
   justify-content: center;
   max-width: 1200px;
   padding: 16px 0;
-  height: 100%;
 `;
 
 export default StyledMain;
