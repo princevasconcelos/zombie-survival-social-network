@@ -1,7 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import Header from '../../components/Header';
-import Main from '../../components/Main';
+// import Main from '../../components/Main';
 
 class Home extends React.Component {
   componentDidMount() {
@@ -13,10 +14,12 @@ class Home extends React.Component {
   onLocationRejected = () => console.log('n permitiu');
 
   render() {
+    const userId = '32jdjdh2u2i2e22o3j';
     return (
       <>
         <Header />
-        <Main />
+        {/* <Main /> */}
+        <Link to={`/survivor/${userId}`}>editar</Link>
       </>
     );
   }
