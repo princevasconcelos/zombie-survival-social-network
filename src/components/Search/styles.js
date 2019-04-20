@@ -10,6 +10,10 @@ const StyledSearch = styled.input`
 
   color: ${styles.colors.black};
 
+  ::placeholder {
+    color: ${styles.colors.darkGray};
+  }
+
   :focus {
     outline: none;
 
@@ -21,6 +25,7 @@ const StyledSearch = styled.input`
 
 export const Container = styled.div`
   display: flex;
+  cursor: text;
   flex: 1 1 auto;
   align-items: center;
   border: 1px solid ${styles.colors.lightestGray};
@@ -29,6 +34,9 @@ export const Container = styled.div`
   padding: 0 8px;
   margin: 0 16px;
   max-width: 430px;
+  :hover {
+    box-shadow: 0px 0px 8px ${styles.colors.tertiary};
+  }
 `;
 
 export default StyledSearch;
