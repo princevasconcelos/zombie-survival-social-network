@@ -7,7 +7,7 @@ const Form = styled.form`
   align-items: stretch;
   width: 100%;
   max-width: 400px;
-  height: 150px;
+  height: 120px;
 `;
 
 export default Form;

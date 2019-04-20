@@ -31,7 +31,7 @@ const Profile = ({ readOnly }) => (
     }}
   >
     {({ values, handleSubmit, handleChange }) => (
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit} id="profile-form">
         <Input
           value={values.name}
           onChange={handleChange}
@@ -53,7 +53,6 @@ const Profile = ({ readOnly }) => (
           />
           <Select onChange={handleChange} options={genres} readOnly={readOnly} />
         </Row>
-        <button type="submit">Enviar</button>
       </Form>
     )}
   </Formik>
