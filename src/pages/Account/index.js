@@ -1,7 +1,10 @@
 import React from 'react';
 import t from 'prop-types';
 
-// import Profile from '../../components/Profile';
+import { Container, Header } from './styles';
+
+import Profile from '../../components/Profile';
+import Icon from '../../components/Icon';
 
 class Account extends React.Component {
   state = {
@@ -27,10 +30,14 @@ class Account extends React.Component {
   render() {
     const { id } = this.state;
     return (
-      <span>
-        {id ? 'Edit ' : 'Create '}
-        Account
-      </span>
+      <Container>
+        <Header>
+          {id ? 'Edit ' : 'New '}
+          Survivor
+          <Icon name="close" />
+        </Header>
+        <Profile />
+      </Container>
     );
   }
 }
