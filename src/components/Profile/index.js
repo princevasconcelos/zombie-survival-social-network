@@ -1,4 +1,5 @@
 import React from 'react';
+import t from 'prop-types';
 import { Formik } from 'formik';
 
 import Form from './styles';
@@ -6,12 +7,22 @@ import Input from './Input';
 import Select from './Select';
 import Row from './Row';
 
-const Profile = () => (
+const genres = [{ name: 'Male', value: 'M' }, { name: 'Female', value: 'F' }];
+
+const propTypes = {
+  readOnly: t.bool,
+};
+
+const defaultProps = {
+  readOnly: false,
+};
+
+const Profile = ({ readOnly }) => (
   <Formik
     initialValues={{
       name: '',
       age: '',
-      genre: '',
+      genre: 'M',
       items: [],
       lonlat: {},
     }}
@@ -28,6 +39,7 @@ const Profile = () => (
           type="text"
           name="name"
           id="name"
+          readOnly={readOnly}
         />
         <Row>
           <Input
@@ -37,13 +49,17 @@ const Profile = () => (
             type="tel"
             name="age"
             id="age"
+            readOnly={readOnly}
           />
-          <Select />
+          <Select onChange={handleChange} options={genres} readOnly={readOnly} />
         </Row>
         <button type="submit">Enviar</button>
       </Form>
     )}
   </Formik>
 );
+
+Profile.propTypes = propTypes;
+Profile.defaultProps = defaultProps;
 
 export default Profile;
