@@ -1,7 +1,7 @@
 import React from 'react';
 import t from 'prop-types';
 
-import StyledSelect from './styles';
+import { StyledSelect, StyledLabel, Container } from './styles';
 
 const propTypes = {
   options: t.arrayOf(t.objectOf(t.string)).isRequired,
@@ -14,13 +14,16 @@ const defaultProps = {
 };
 
 const Select = ({ options, onChange, readOnly }) => (
-  <StyledSelect name="genre" onChange={onChange} readOnly={readOnly}>
-    {options.map(option => (
-      <option key={option.name} value={option.value}>
-        {option.name}
-      </option>
-    ))}
-  </StyledSelect>
+  <Container>
+    <StyledSelect name="genre" onChange={onChange} readOnly={readOnly}>
+      {options.map(option => (
+        <option key={option.name} value={option.value}>
+          {option.name}
+        </option>
+      ))}
+    </StyledSelect>
+    <StyledLabel>Genre</StyledLabel>
+  </Container>
 );
 
 Select.propTypes = propTypes;
