@@ -25,7 +25,12 @@ const Profile = ({ readOnly }) => (
       name: '',
       age: '',
       genre: 'M',
-      items: [],
+      items: {
+        Water: '',
+        Food: '',
+        Medication: '',
+        Ammunition: '',
+      },
       lonlat: {},
     }}
     onSubmit={(values) => {
@@ -55,7 +60,7 @@ const Profile = ({ readOnly }) => (
           />
           <Select onChange={handleChange} options={genres} readOnly={readOnly} />
         </Row>
-        <Inventory />
+        <Inventory items={values.items} onChange={handleChange} readOnly={readOnly} />
       </Form>
     )}
   </Formik>

@@ -29,6 +29,11 @@ const StyledInput = styled.input`
   color: ${styles.colors.black};
 
   :focus {
+    ${({ readOnly }) => readOnly
+      && `
+      outline: none;
+    `}
+
     ~ label {
       top: -10px;
       font-size: ${styles.sizes.default};
