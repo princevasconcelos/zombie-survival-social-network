@@ -4,9 +4,10 @@ import styles from '../../utils/constraints';
 
 const Header = styled.header`
   height: 50px;
+  text-align: center;
   font-size: 38px;
   font-weight: bold;
-  color: ${styles.colors.black};
+  color: ${styles.colors.primary};
 `;
 
 const Container = styled.div`
