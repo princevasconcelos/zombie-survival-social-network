@@ -2,6 +2,8 @@ import React from 'react';
 import t from 'prop-types';
 import { Formik } from 'formik';
 
+import Inventory from '../Inventory';
+
 import Form from './styles';
 import Input from './Input';
 import Select from './Select';
@@ -53,6 +55,7 @@ const Profile = ({ readOnly }) => (
           />
           <Select onChange={handleChange} options={genres} readOnly={readOnly} />
         </Row>
+        <Inventory />
       </Form>
     )}
   </Formik>
