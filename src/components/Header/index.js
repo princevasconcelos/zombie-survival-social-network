@@ -13,7 +13,7 @@ const Header = () => (
         short="ZSSN"
         long="Zombie Survival Social Network"
         color="primary"
-        size="xlarge"
+        size="xmedium"
       />
       <Search />
       <Link to="register">Register</Link>

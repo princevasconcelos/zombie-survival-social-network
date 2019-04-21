@@ -5,7 +5,7 @@ import styles from '../../../utils/constraints';
 const StyledLabel = styled.label`
   position: absolute;
   background-color: ${styles.colors.white};
-  font-size: ${styles.sizes.large};
+  font-size: ${styles.sizes.xdefault};
   padding: 0 4px;
   top: 16px;
   left: 12px;
@@ -25,7 +25,7 @@ const StyledInput = styled.input`
   border-radius: 4px;
   border: 1px solid lightgray;
   padding: 16px;
-  font-size: ${styles.sizes.large};
+  font-size: ${styles.sizes.xdefault};
   color: ${styles.colors.black};
 
   :focus {

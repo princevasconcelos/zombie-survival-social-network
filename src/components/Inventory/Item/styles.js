@@ -10,16 +10,16 @@ const Container = styled.div`
 
   width: 100px;
   height: 100px;
-  border: 4px solid white;
+  margin: 4px;
 `;
 
 const Name = styled.h3`
-  font-size: 14px;
-  color: lightgray;
+  font-size: ${styles.sizes.small};
+  color: ${styles.colors.lightGray};
 `;
 
 const Value = styled.span`
-  font-size: 50px;
+  font-size: ${styles.sizes.xxlarge};
   color: ${styles.colors.black};
 `;
 

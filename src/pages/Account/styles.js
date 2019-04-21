@@ -5,7 +5,7 @@ import styles from '../../utils/constraints';
 const Header = styled.header`
   height: 50px;
   text-align: center;
-  font-size: 38px;
+  font-size: ${styles.sizes.large};
   font-weight: bold;
   color: ${styles.colors.primary};
 `;

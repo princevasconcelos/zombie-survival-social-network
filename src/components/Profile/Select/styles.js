@@ -11,7 +11,7 @@ const StyledSelect = styled.select`
   border-radius: 4px;
 
   padding: 0 12px;
-  font-size: ${styles.sizes.large};
+  font-size: ${styles.sizes.xdefault};
   color: ${styles.colors.black};
 
   ${({ readOnly }) => readOnly

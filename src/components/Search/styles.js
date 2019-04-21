@@ -1,10 +1,11 @@
 import styled from 'styled-components';
+
 import styles from '../../utils/constraints';
 
 const StyledSearch = styled.input`
   background-color: transparent;
   border: none;
-  font-size: 18px;
+  font-size: ${styles.sizes.xdefault};
   width: 100%;
   margin-left: 4px;
 
@@ -35,7 +36,7 @@ export const Container = styled.div`
   margin: 0 16px;
   max-width: 430px;
   :hover {
-    box-shadow: 0px 0px 8px ${styles.colors.tertiary};
+    box-shadow: 0px 0px 8px ${styles.colors.blue};
   }
 `;
 
