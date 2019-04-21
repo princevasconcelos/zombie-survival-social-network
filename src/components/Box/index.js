@@ -7,7 +7,7 @@ import { StyledBox, Title, FloatingIcon } from './styles';
 
 const propTypes = {
   title: t.string.isRequired,
-  children: t.element.isRequired,
+  children: t.oneOfType([t.element.isRequired, t.arrayOf(t.element)]).isRequired,
   withBorder: t.bool,
   icon: t.string,
   link: t.string,
