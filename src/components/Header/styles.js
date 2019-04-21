@@ -8,7 +8,7 @@ const StyledHeader = styled.header`
   align-items: center;
   height: 80px;
   width: 100%;
-  box-shadow: inset 0px -1px 0px ${styles.colors.gray};
+  box-shadow: inset 0px -1px 0px ${styles.colors.lightGray};
 `;
 
 export const Container = styled.div`

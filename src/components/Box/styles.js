@@ -18,10 +18,10 @@ const StyledBox = styled.section`
   position: relative;
   ${({ withBorder }) => withBorder
     && `
-    border-top: 1px solid ${styles.colors.gray};
+    border-top: 1px solid ${styles.colors.lightGray};
 
     @media (min-width: ${styles.screens.desktop}) {
-      border: 1px solid ${styles.colors.gray};
+      border: 1px solid ${styles.colors.lightGray};
     }
   `};
   padding: 16px 8px;
