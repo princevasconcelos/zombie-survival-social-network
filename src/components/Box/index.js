@@ -3,7 +3,7 @@ import t from 'prop-types';
 
 import Icon from '../Icon';
 
-import { StyledBox, Title, FloatingIcon } from './styles';
+import { StyledBox, Title, Margin } from './styles';
 
 const propTypes = {
   title: t.string.isRequired,
@@ -23,12 +23,15 @@ const Box = ({
   title, children, withBorder, icon, link,
 }) => (
   <StyledBox withBorder={withBorder}>
-    {icon && link && (
-      <FloatingIcon>
-        <Icon name={icon} link={link} />
-      </FloatingIcon>
-    )}
-    <Title>{title}</Title>
+    <Title>
+      {title}
+
+      {icon && link && (
+        <Margin>
+          <Icon name={icon} link={link} />
+        </Margin>
+      )}
+    </Title>
     {children}
   </StyledBox>
 );

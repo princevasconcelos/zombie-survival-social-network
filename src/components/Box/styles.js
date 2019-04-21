@@ -12,6 +12,10 @@ const Title = styled.h2`
   color: ${styles.colors.secondary};
 `;
 
+const Margin = styled.span`
+  margin-left: 8px;
+`;
+
 const StyledBox = styled.section`
   display: flex;
   justify-content: center;
@@ -29,12 +33,4 @@ const StyledBox = styled.section`
   width: 100%;
 `;
 
-const FloatingIcon = styled.div`
-  position: absolute;
-  top: -16px;
-  right: 0;
-  width: 32px;
-  height: 32px;
-`;
-
-export { StyledBox, Title, FloatingIcon };
+export { StyledBox, Title, Margin };
