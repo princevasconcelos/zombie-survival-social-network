@@ -1,16 +1,30 @@
 import React from 'react';
+import t from 'prop-types';
 
-// import StyledInventory from './styles';
 import Box from '../Box';
 import Item from './Item';
 
-const Inventory = ({ items }) => (
+const propTypes = {
+  items: t.objectOf(t.string).isRequired,
+  onChange: t.func,
+  readOnly: t.bool,
+};
+
+const defaultProps = {
+  onChange: () => {},
+  readOnly: false,
+};
+
+const Inventory = ({ items, onChange, readOnly }) => (
   <Box title="Inventory" withBorder>
-    <Item name="Water" value="4" />
-    <Item name="Food" value="3" />
-    <Item name="Medication" value="1" />
-    <Item name="Ammunition" value="120" />
+    <Item name="Water" value={items.Water} handleChange={onChange} readOnly={readOnly} />
+    <Item name="Food" value={items.Food} handleChange={onChange} readOnly={readOnly} />
+    <Item name="Medication" value={items.Medication} handleChange={onChange} readOnly={readOnly} />
+    <Item name="Ammunition" value={items.Ammunition} handleChange={onChange} readOnly={readOnly} />
   </Box>
 );
+
+Inventory.propTypes = propTypes;
+Inventory.defaultProps = defaultProps;
 
 export default Inventory;

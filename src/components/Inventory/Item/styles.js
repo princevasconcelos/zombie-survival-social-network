@@ -18,9 +18,19 @@ const Name = styled.h3`
   color: ${styles.colors.lightGray};
 `;
 
-const Value = styled.span`
+const Value = styled.input`
+  width: 100%;
+  text-align: center;
+  border: none;
   font-size: ${styles.sizes.xxlarge};
   color: ${styles.colors.black};
+
+  ${({ readOnly }) => readOnly
+    && `
+      :focus {
+        outline: none;
+      }
+  `}
 `;
 
 export { Container, Name, Value };
