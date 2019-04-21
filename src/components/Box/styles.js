@@ -25,7 +25,7 @@ const StyledBox = styled.section`
     }
   `};
   padding: 16px 8px;
-  margin-top: 8px;
+  margin-top: 16px;
   width: 100%;
 `;
 
