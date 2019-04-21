@@ -9,11 +9,13 @@ const Title = styled.h2`
   top: -15px;
   left: 50%;
   margin-left: -50px;
+  color: ${styles.colors.secondary};
 `;
 
 const StyledBox = styled.section`
+  display: flex;
+  justify-content: center;
   position: relative;
-  width: 100%;
   ${({ withBorder }) => withBorder
     && `
     border-top: 1px solid ${styles.colors.gray};
