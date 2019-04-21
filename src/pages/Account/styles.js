@@ -8,6 +8,7 @@ const Header = styled.header`
   font-size: ${styles.sizes.large};
   font-weight: bold;
   color: ${styles.colors.primary};
+  margin-bottom: 16px;
 `;
 
 const Container = styled.div`

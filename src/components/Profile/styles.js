@@ -8,6 +8,7 @@ const Form = styled.form`
   width: 100%;
   max-width: 400px;
   height: auto;
+  margin-top: 8px;
 `;
 
 export default Form;
