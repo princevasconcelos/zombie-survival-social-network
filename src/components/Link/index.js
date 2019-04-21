@@ -4,7 +4,7 @@ import t from 'prop-types';
 import StyledLink from './styles';
 
 const propTypes = {
-  children: t.string.isRequired,
+  children: t.oneOfType([t.string, t.element]).isRequired,
   to: t.string.isRequired,
 };
 
