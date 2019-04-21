@@ -5,7 +5,7 @@ import { StyledBox, Title } from './styles';
 
 const propTypes = {
   title: t.string.isRequired,
-  children: t.string.isRequired,
+  children: t.element.isRequired,
   withBorder: t.bool,
 };
 
