@@ -5,6 +5,7 @@ import API from '../../services/api';
 import StyledMain from './styles';
 
 import Reports from '../Reports';
+import Profile from '../Profile';
 import Box from '../Box';
 
 class Main extends React.Component {
@@ -15,23 +16,30 @@ class Main extends React.Component {
     survivorError: null,
   };
 
+  isComponentMounted = false;
+
   componentDidMount() {
+    this.isComponentMounted = true;
     this.storeReports();
     this.storeSurvivors();
+  }
+
+  componentWillUnmount() {
+    this.isComponentMounted = false;
   }
 
   storeReports = async () => {
     const reports = await API.getReports();
     if (!reports || reports.error) return;
     Promise.all(reports.map(async report => API.get(report).then(r => r.report)))
-      .then(data => this.setState({ reports: data }))
-      .catch(error => this.setState({ reportError: error }));
+      .then(data => this.isComponentMounted && this.setState({ reports: data }))
+      .catch(error => this.isComponentMounted && this.setState({ reportError: error }));
   };
 
   storeSurvivors = async () => {
     const survivors = await API.getSurvivors();
-    if (!survivors || survivors.error) return this.setState({ survivorError: true });
-    return this.setState({ survivors });
+    if (!survivors || survivors.error) return this.isComponentMounted && this.setState({ survivorError: true });
+    return this.isComponentMounted && this.setState({ survivors });
   };
 
   render() {
@@ -40,8 +48,10 @@ class Main extends React.Component {
     } = this.state;
     return (
       <StyledMain>
-        <Box title="My Profile">
-          <span>legal</span>
+        {/* <Reports /> */}
+        {/* <span>henlo</span> */}
+        <Box title="Profile" icon="edit" link="/survivor/42d2dh23">
+          <Profile readOnly />
         </Box>
       </StyledMain>
     );
