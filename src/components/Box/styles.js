@@ -28,4 +28,12 @@ const StyledBox = styled.section`
   margin-top: 8px;
 `;
 
-export { StyledBox, Title };
+const FloatingIcon = styled.div`
+  position: absolute;
+  top: -16px;
+  right: 0;
+  width: 32px;
+  height: 32px;
+`;
+
+export { StyledBox, Title, FloatingIcon };
