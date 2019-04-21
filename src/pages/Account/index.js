@@ -41,7 +41,7 @@ class Account extends React.Component {
     return (
       <Container>
         <Header>
-          {id ? 'Edit profile' : 'Create new account '}
+          {id ? 'Edit profile' : 'New account '}
           <Floating onClick={this.handleClose}>
             <Icon name="close" />
           </Floating>
