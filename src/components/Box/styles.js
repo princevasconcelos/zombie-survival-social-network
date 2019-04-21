@@ -26,6 +26,7 @@ const StyledBox = styled.section`
   `};
   padding: 16px 8px;
   margin-top: 8px;
+  width: 100%;
 `;
 
 const FloatingIcon = styled.div`
