@@ -7,6 +7,7 @@ import StyledMain from './styles';
 import Reports from '../Reports';
 import Profile from '../Profile';
 import Box from '../Box';
+import Survivors from '../Survivors';
 
 class Main extends React.Component {
   state = {
@@ -51,6 +52,9 @@ class Main extends React.Component {
         {/* <Reports /> */}
         <Box title="My Profile" icon="edit" link="/survivor/42d2dh23">
           <Profile readOnly />
+        </Box>
+        <Box title="Survivors">
+          <Survivors data={survivors} error={survivorError} />
         </Box>
       </StyledMain>
     );
