@@ -49,8 +49,7 @@ class Main extends React.Component {
     return (
       <StyledMain>
         {/* <Reports /> */}
-        {/* <span>henlo</span> */}
-        <Box title="Profile" icon="edit" link="/survivor/42d2dh23">
+        <Box title="My Profile" icon="edit" link="/survivor/42d2dh23">
           <Profile readOnly />
         </Box>
       </StyledMain>
