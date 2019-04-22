@@ -6,6 +6,7 @@ import { Container, Header, Floating } from './styles';
 import Profile from '../../components/Profile';
 import Icon from '../../components/Icon';
 import Button from '../../components/Button';
+import Maps from '../../components/Maps';
 
 class Account extends React.Component {
   state = {
@@ -47,6 +48,7 @@ class Account extends React.Component {
           </Floating>
         </Header>
         <Profile />
+        <Maps />
         <Button type="submit" form="profile-form">
           Save
         </Button>
