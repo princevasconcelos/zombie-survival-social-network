@@ -28,7 +28,7 @@ const StyledBox = styled.section`
       border: 1px solid ${styles.colors.lightGray};
     }
   `};
-  padding: 16px 8px;
+  padding: 16px 8px 0;
   margin-top: 16px;
   width: 100%;
 `;
