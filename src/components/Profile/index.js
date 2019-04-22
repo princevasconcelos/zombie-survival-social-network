@@ -76,8 +76,8 @@ const Profile = ({
           id="name"
           readOnly={readOnly}
         />
-        {errors.name && touched.name && <small>{errors.name}</small>}
-        {apiErrors && apiErrors.name && <small>{apiErrors.name}</small>}
+        {!readOnly && errors.name && touched.name && <small>{errors.name}</small>}
+        {!readOnly && apiErrors && apiErrors.name && <small>{apiErrors.name}</small>}
 
         <Row>
           <Input
@@ -97,7 +97,7 @@ const Profile = ({
           />
           <Select onChange={handleChange} options={genres} readOnly={readOnly} />
         </Row>
-        {errors.age && touched.age && <small>{errors.age}</small>}
+        {!readOnly && errors.age && touched.age && <small>{errors.age}</small>}
         <Inventory
           boxTitle={boxTitle}
           items={values.items}
@@ -105,7 +105,7 @@ const Profile = ({
           onBlur={handleBlur}
           readOnly={readOnly}
         />
-        {errors.items && touched.items && <small>{errors.items}</small>}
+        {!readOnly && errors.items && touched.items && <small>{errors.items}</small>}
       </Form>
     )}
   </Formik>
