@@ -15,6 +15,7 @@ class Account extends React.Component {
   state = {
     id: '',
     userLocation: {},
+    apiErrors: null,
   };
 
   static propTypes = {
@@ -83,13 +84,11 @@ class Account extends React.Component {
 
     const response = await API.postSurvivor(formData);
 
-    if (response.id) {
-      alert('ok');
-    }
+    response.id ? console.log('worked') : this.setState({ apiErrors: response });
   };
 
   render() {
-    const { id, userLocation, formErrors } = this.state;
+    const { id, userLocation, apiErrors } = this.state;
     return (
       <Container>
         <Header>
@@ -101,7 +100,11 @@ class Account extends React.Component {
         <Button color="blue" type="submit" form="profile-form">
           Save
         </Button>
-        <Profile boxTitle="Choose your items" onHandleSubmit={this.handleSubmit} />
+        <Profile
+          boxTitle="Choose your items"
+          onHandleSubmit={this.handleSubmit}
+          apiErrors={apiErrors}
+        />
         <Box title="Select your current location" withBorder>
           <Maps
             onReady={this.getUserLocation}
