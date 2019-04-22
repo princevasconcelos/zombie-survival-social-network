@@ -6,6 +6,7 @@ import { StyledInput, StyledLabel, Container } from './styles';
 const propTypes = {
   value: t.string.isRequired,
   onChange: t.func.isRequired,
+  onBlur: t.func.isRequired,
   label: t.string.isRequired,
   type: t.string.isRequired,
   name: t.string.isRequired,
@@ -18,12 +19,13 @@ const defaultProps = {
 };
 
 const Input = ({
-  value, onChange, label, type, name, id, readOnly,
+  value, onChange, onBlur, label, type, name, id, readOnly,
 }) => (
   <Container>
     <StyledInput
       value={value}
       onChange={onChange}
+      onBlur={onBlur}
       type={type}
       name={name}
       id={id}
