@@ -8,6 +8,7 @@ const propTypes = {
   value: t.string.isRequired,
   readOnly: t.bool,
   handleChange: t.func,
+  color: t.string.isRequired,
 };
 
 const defaultProps = {
@@ -16,7 +17,7 @@ const defaultProps = {
 };
 
 const Item = ({
-  name, value, readOnly, handleChange,
+  name, value, readOnly, handleChange, color,
 }) => (
   <Container>
     <Name>{name}</Name>
@@ -26,6 +27,7 @@ const Item = ({
       value={value}
       onChange={handleChange}
       readOnly={readOnly}
+      color={color}
     />
   </Container>
 );
