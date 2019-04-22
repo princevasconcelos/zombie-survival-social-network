@@ -1,7 +1,7 @@
 const styles = {
   colors: {
-    primary: '#065535',
-    secondary: '#78c165;',
+    primary: 'black',
+    secondary: 'black;',
     tertiary: '#b19cd0',
     blue: '#4d90fe',
     black: '#3f3e3e',
@@ -11,7 +11,13 @@ const styles = {
     lightestGray: '#f2f2f2',
     white: '#FFF',
     red: '#dc3545',
-    green: '#78c165',
+    green: '#28a745',
+    items: {
+      Water: '#3399ff',
+      Food: '#fa8072',
+      Medication: '#f9a94d',
+      Ammunition: '#cc0000',
+    },
   },
   sizes: {
     xxlarge: '50px',
