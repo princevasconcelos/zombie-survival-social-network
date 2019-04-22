@@ -8,16 +8,18 @@ const propTypes = {
   value: t.string.isRequired,
   readOnly: t.bool,
   handleChange: t.func,
+  onBlur: t.func,
   color: t.string.isRequired,
 };
 
 const defaultProps = {
   readOnly: false,
   handleChange: () => {},
+  onBlur: () => {},
 };
 
 const Item = ({
-  name, value, readOnly, handleChange, color,
+  name, value, readOnly, handleChange, onBlur, color,
 }) => (
   <Container>
     <Name>{name}</Name>
@@ -25,7 +27,13 @@ const Item = ({
       name={`items.${name}`}
       placeholder="0"
       value={value}
-      onChange={handleChange}
+      onChange={(event) => {
+        if (event.target.value.match(/\D+/g)) {
+          return event.preventDefault();
+        }
+        return handleChange(event);
+      }}
+      onBlur={onBlur}
       readOnly={readOnly}
       color={color}
     />
