@@ -2,9 +2,10 @@ import React from 'react';
 import t from 'prop-types';
 
 import Link from '../../Link';
+import Button from '../../Button';
 
 import {
-  Item, Row, Name, Button, Bio, Symbol,
+  Item, Row, Name, Bio, Symbol,
 } from './styles';
 
 const propTypes = {
@@ -41,7 +42,7 @@ const Survivor = ({
         </Row>
         <Name>{name}</Name>
       </Link>
-      <Button>Report</Button>
+      <Button color="red">Report</Button>
     </Item>
   );
 };
