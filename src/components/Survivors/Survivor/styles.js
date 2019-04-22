@@ -15,17 +15,11 @@ const Item = styled.li`
     margin-bottom: 8px;
   }
 
-  ${({ isInfected }) => (isInfected
-    ? `
-      box-shadow: inset 0px 0px 24px ${styles.colors.green};
-    `
-    : `
-      box-shadow: inset 0px -1px 0px ${styles.colors.lightGray};
+  :hover {
+    ${({ isInfected }) => !isInfected && `background-color: ${styles.colors.lightestGray};`}
+  }
 
-      :hover {
-        background-color: ${styles.colors.lightestGray};
-      }
-  `)}
+  box-shadow: inset 0px -1px 0px ${styles.colors.lightGray};
 `;
 
 const Row = styled.div`
@@ -33,6 +27,7 @@ const Row = styled.div`
   align-items: center;
 
   i {
+    color: ${styles.colors.darkGray};
     font-size: ${styles.sizes.xmedium};
   }
 `;
@@ -53,6 +48,7 @@ const Name = styled.span`
   width: 100%;
   color: ${styles.colors.black};
   font-size: ${styles.sizes.xxdefault};
+  margin-left: 6px;
 `;
 
 const Button = styled.button`
