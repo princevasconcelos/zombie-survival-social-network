@@ -21,7 +21,6 @@ const Inventory = ({
   items, onChange, readOnly, boxTitle,
 }) => (
   <Box title={boxTitle} withBorder>
-    {console.log(boxTitle)}
     <Item
       name="Water"
       color="Water"
