@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const StyledRow = styled.div`
   display: flex;
-  margin: 10px 0;
+  margin-top: 10px;
 `;
 
 export default StyledRow;
