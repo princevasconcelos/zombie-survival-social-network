@@ -7,15 +7,19 @@ const propTypes = {
   children: t.string.isRequired,
   type: t.string,
   form: t.string,
+  color: t.string,
 };
 
 const defaultProps = {
   type: 'button',
   form: '',
+  color: 'black',
 };
 
-const Button = ({ children, type, form }) => (
-  <StyledButton type={type} form={form}>
+const Button = ({
+  children, type, form, color,
+}) => (
+  <StyledButton type={type} form={form} color={color}>
     {children}
   </StyledButton>
 );
