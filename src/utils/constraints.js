@@ -1,6 +1,6 @@
 const styles = {
   colors: {
-    primary: '#612F74',
+    primary: '#065535',
     secondary: '#9964ad;',
     tertiary: '#b19cd0',
     blue: '#4d90fe',
@@ -10,12 +10,15 @@ const styles = {
     lightGray: '#d3d3d3',
     lightestGray: '#f2f2f2',
     white: '#FFF',
+    red: '#dc3545',
+    green: '#78c165',
   },
   sizes: {
     xxlarge: '50px',
     large: '38px',
     xmedium: '32px',
     medium: '24px',
+    xxdefault: '20px',
     xdefault: '18px',
     default: '16px',
     small: '14px',
