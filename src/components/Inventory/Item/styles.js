@@ -9,7 +9,7 @@ const Container = styled.div`
   align-items: center;
 
   width: 100px;
-  height: 100px;
+  height: 80px;
   margin: 4px;
 `;
 
