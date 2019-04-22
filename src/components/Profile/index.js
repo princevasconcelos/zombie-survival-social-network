@@ -16,20 +16,19 @@ const propTypes = {
   readOnly: t.bool,
   boxTitle: t.string,
   onHandleSubmit: t.func,
+  apiErrors: t.objectOf(t.array),
 };
 
 const defaultProps = {
   readOnly: false,
   boxTitle: '',
   onHandleSubmit: () => {},
+  apiErrors: {},
 };
 
 const ProfileSchema = yup.object().shape({
-  name: yup.string().required('Required'),
-  age: yup
-    .number()
-    .positive('Must be positive')
-    .required('Required'),
+  name: yup.string().required('Name is required'),
+  age: yup.string().required('Age is required'),
   items: yup
     .object({
       Water: yup.string().matches(/\w*/),
@@ -44,7 +43,9 @@ const ProfileSchema = yup.object().shape({
     ),
 });
 
-const Profile = ({ readOnly, boxTitle, onHandleSubmit }) => (
+const Profile = ({
+  readOnly, boxTitle, onHandleSubmit, apiErrors,
+}) => (
   <Formik
     initialValues={{
       name: '',
@@ -62,23 +63,32 @@ const Profile = ({ readOnly, boxTitle, onHandleSubmit }) => (
     onSubmit={onHandleSubmit}
   >
     {({
-      values, errors, handleSubmit, handleChange,
+      values, touched, errors, handleSubmit, handleBlur, handleChange,
     }) => (
       <Form onSubmit={handleSubmit} id="profile-form">
         <Input
           value={values.name}
           onChange={handleChange}
+          onBlur={handleBlur}
           label="Name"
           type="text"
           name="name"
           id="name"
           readOnly={readOnly}
         />
-        {errors.name && <small>Name is required</small>}
+        {errors.name && touched.name && <small>{errors.name}</small>}
+        {apiErrors && apiErrors.name && <small>{apiErrors.name}</small>}
+
         <Row>
           <Input
             value={values.age}
-            onChange={handleChange}
+            onChange={(event) => {
+              if (event.target.value.match(/\D+/g)) {
+                return event.preventDefault();
+              }
+              return handleChange(event);
+            }}
+            onBlur={handleBlur}
             label="Age"
             type="tel"
             name="age"
@@ -87,14 +97,15 @@ const Profile = ({ readOnly, boxTitle, onHandleSubmit }) => (
           />
           <Select onChange={handleChange} options={genres} readOnly={readOnly} />
         </Row>
-        {errors.age && <small>Age is required</small>}
+        {errors.age && touched.age && <small>{errors.age}</small>}
         <Inventory
           boxTitle={boxTitle}
           items={values.items}
           onChange={handleChange}
+          onBlur={handleBlur}
           readOnly={readOnly}
         />
-        {errors.items && <small>{errors.items}</small>}
+        {errors.items && touched.items && <small>{errors.items}</small>}
       </Form>
     )}
   </Formik>
