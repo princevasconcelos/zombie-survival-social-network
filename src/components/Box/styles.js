@@ -9,7 +9,7 @@ const Title = styled.h2`
   background-color: white;
   padding: 0 6px;
   top: -15px;
-  color: ${styles.colors.secondary};
+  color: ${styles.colors.darkGray};
 `;
 
 const Margin = styled.span`
