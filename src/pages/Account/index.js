@@ -1,6 +1,8 @@
 import React from 'react';
 import t from 'prop-types';
 
+import API from '../../services/api';
+
 import { Container, Header, Floating } from './styles';
 
 import Profile from '../../components/Profile';
@@ -59,6 +61,30 @@ class Account extends React.Component {
     history.goBack();
   };
 
+  handleSubmit = (formValues) => {
+    const {
+      age, genre, items, name,
+    } = formValues;
+    const { userLocation } = this.state;
+
+    const validItems = Object.entries(items)
+      .filter(e => e[1])
+      .map(e => e.join(':'))
+      .join(';');
+
+    // const locationFormat = `Point(${location.lat} ${location.lng})'`;
+    // console.log(location);
+    const formData = new FormData();
+
+    formData.append('person[name]', name);
+    formData.append('person[age]', +age);
+    formData.append('person[gender]', genre);
+    // formData.append('person[lonlat]', 'Point(-0000.111 1111.000)');
+    formData.append('items', validItems);
+
+    // API.postSurvivor(formData);
+  };
+
   render() {
     const { id, userLocation } = this.state;
     return (
@@ -72,7 +98,7 @@ class Account extends React.Component {
         <Button color="blue" type="submit" form="profile-form">
           Save
         </Button>
-        <Profile boxTitle="Choose your items" />
+        <Profile boxTitle="Choose your items" onHandleSubmit={this.handleSubmit} />
         <Box title="Select your current location" withBorder>
           <Maps
             onReady={this.getUserLocation}
