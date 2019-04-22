@@ -14,7 +14,7 @@ import Box from '../../components/Box';
 class Account extends React.Component {
   state = {
     id: '',
-    userLocation: [],
+    userLocation: {},
   };
 
   static propTypes = {
@@ -40,20 +40,20 @@ class Account extends React.Component {
     navigator.geolocation.getCurrentPosition(this.onLocationGranted, this.onLocationRejected);
   };
 
-  onLocationGranted = ({ coords: { latitude, longitude } }) => this.setState({ userLocation: [{ lat: latitude, lng: longitude }] });
+  onLocationGranted = ({ coords: { latitude, longitude } }) => this.setState({ userLocation: { lat: latitude, lng: longitude } });
 
   onLocationRejected = () => console.log('n permitiu');
 
   onMarkerChangeHandler = (mapProps, map, coords) => {
     const { latLng } = coords;
-    this.setState({ userLocation: [{ lat: latLng.lat(), lng: latLng.lng() }] });
+    this.setState({ userLocation: { lat: latLng.lat(), lng: latLng.lng() } });
   };
 
   onMapClickHandler = (mapProps, map, coords) => {
     const { userLocation } = this.state;
-    if (userLocation.length > 0) return;
+    if (userLocation.lat && userLocation.lng) return;
     const { latLng } = coords;
-    this.setState({ userLocation: [{ lat: latLng.lat(), lng: latLng.lng() }] });
+    this.setState({ userLocation: { lat: latLng.lat(), lng: latLng.lng() } });
   };
 
   handleClose = () => {
@@ -103,7 +103,7 @@ class Account extends React.Component {
           <Maps
             onReady={this.getUserLocation}
             onMarkerDragEnd={this.onMarkerChangeHandler}
-            markers={userLocation}
+            markers={[userLocation]}
             onMapClick={this.onMapClickHandler}
           />
         </Box>
