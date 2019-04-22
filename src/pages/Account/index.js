@@ -61,32 +61,35 @@ class Account extends React.Component {
     history.goBack();
   };
 
-  handleSubmit = (formValues) => {
+  handleSubmit = async (formValues) => {
     const {
       age, genre, items, name,
     } = formValues;
     const { userLocation } = this.state;
 
-    const validItems = Object.entries(items)
+    const formattedValidItems = Object.entries(items)
       .filter(e => e[1])
       .map(e => e.join(':'))
       .join(';');
 
-    // const locationFormat = `Point(${location.lat} ${location.lng})'`;
-    // console.log(location);
-    const formData = new FormData();
+    const lonlat = `Point(${userLocation.lng} ${userLocation.lat})`;
 
+    const formData = new FormData();
     formData.append('person[name]', name);
     formData.append('person[age]', +age);
     formData.append('person[gender]', genre);
-    // formData.append('person[lonlat]', 'Point(-0000.111 1111.000)');
-    formData.append('items', validItems);
+    formData.append('person[lonlat]', lonlat);
+    formData.append('items', formattedValidItems);
 
-    // API.postSurvivor(formData);
+    const response = await API.postSurvivor(formData);
+
+    if (response.id) {
+      alert('ok');
+    }
   };
 
   render() {
-    const { id, userLocation } = this.state;
+    const { id, userLocation, formErrors } = this.state;
     return (
       <Container>
         <Header>
