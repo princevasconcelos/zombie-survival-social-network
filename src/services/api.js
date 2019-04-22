@@ -29,7 +29,7 @@ const postSurvivor = formData => fetch(`${baseUrl}/people.json`, {
   headers: postHeaders,
   body: formData,
 })
-  .then(response => console.log(response))
+  .then(response => response.json())
   .catch(error => error);
 
 const API = {
