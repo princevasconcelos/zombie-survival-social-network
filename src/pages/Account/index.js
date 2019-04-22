@@ -72,7 +72,7 @@ class Account extends React.Component {
         <Button color="blue" type="submit" form="profile-form">
           Save
         </Button>
-        <Profile />
+        <Profile boxTitle="Choose your items" />
         <Box title="Select your current location" withBorder>
           <Maps
             onReady={this.getUserLocation}

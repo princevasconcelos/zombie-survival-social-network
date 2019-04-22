@@ -51,7 +51,7 @@ class Main extends React.Component {
       <StyledMain>
         {/* <Reports /> */}
         <Box title="My Profile" icon="edit" link="/survivor/42d2dh23">
-          <Profile readOnly />
+          <Profile boxTitle="Inventory" readOnly />
         </Box>
         <Box title="Survivors">
           <Survivors data={survivors} error={survivorError} />

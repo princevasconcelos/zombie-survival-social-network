@@ -13,13 +13,15 @@ const genres = [{ name: 'Male', value: 'M' }, { name: 'Female', value: 'F' }];
 
 const propTypes = {
   readOnly: t.bool,
+  boxTitle: t.string,
 };
 
 const defaultProps = {
   readOnly: false,
+  boxTitle: '',
 };
 
-const Profile = ({ readOnly }) => (
+const Profile = ({ readOnly, boxTitle }) => (
   <Formik
     initialValues={{
       name: '',
@@ -60,7 +62,12 @@ const Profile = ({ readOnly }) => (
           />
           <Select onChange={handleChange} options={genres} readOnly={readOnly} />
         </Row>
-        <Inventory items={values.items} onChange={handleChange} readOnly={readOnly} />
+        <Inventory
+          boxTitle={boxTitle}
+          items={values.items}
+          onChange={handleChange}
+          readOnly={readOnly}
+        />
       </Form>
     )}
   </Formik>
