@@ -4,7 +4,8 @@ import t from 'prop-types';
 import Loading from '../Loading';
 import Error from '../Error';
 
-import Container from './styles';
+import { Container, List } from './styles';
+import Item from './Survivor';
 
 const propTypes = {
   data: t.arrayOf(t.object).isRequired,
@@ -20,9 +21,18 @@ const Survivors = ({ data, error }) => {
   if (error) return <Error msg={error} />;
   return (
     <Container>
-      <ul>
-        {data.length > 0 && data.map(survivor => <li key={survivor.location}>{survivor.name}</li>)}
-      </ul>
+      <List>
+        {data.length > 0
+          && data.map(survivor => (
+            <Item
+              key={survivor.location}
+              name={survivor.name}
+              age={survivor.age}
+              gender={survivor.gender}
+              isInfected={survivor['infected?']}
+            />
+          ))}
+      </List>
     </Container>
   );
 };
