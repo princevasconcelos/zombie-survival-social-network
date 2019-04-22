@@ -8,10 +8,13 @@ const StyledLink = styled(Link)`
   color: ${styles.colors.black};
   font-weight: bold;
 
-  :hover {
-    box-shadow: inset 0 -2px ${styles.colors.blacker};
-    padding: 29px 0;
-  }
+  ${({ hovereefect }) => hovereefect === 'true'
+    && `
+    :hover {
+      box-shadow: inset 0 -2px ${styles.colors.blacker};
+      padding: 29px 0;
+    }
+  `}
 `;
 
 export default StyledLink;

@@ -4,12 +4,21 @@ import t from 'prop-types';
 import StyledLink from './styles';
 
 const propTypes = {
-  children: t.oneOfType([t.string, t.element]).isRequired,
+  children: t.oneOfType([t.string, t.element, t.arrayOf(t.element)]).isRequired,
   to: t.string.isRequired,
+  hoverEffect: t.bool,
 };
 
-const Link = ({ children, to }) => <StyledLink to={to}>{children}</StyledLink>;
+const defaultProps = {
+  hoverEffect: true,
+};
+
+const Link = ({ children, to, hoverEffect }) => (
+  <StyledLink to={to} hovereefect={hoverEffect.toString()}>
+    {children}
+  </StyledLink>
+);
 
 Link.propTypes = propTypes;
-
+Link.defaultProps = defaultProps;
 export default Link;
