@@ -14,6 +14,7 @@ const genres = [{ name: 'Male', value: 'M' }, { name: 'Female', value: 'F' }];
 const propTypes = {
   readOnly: t.bool,
   boxTitle: t.string,
+  onHandleSubmit: t.func.isRequired,
 };
 
 const defaultProps = {
@@ -21,7 +22,7 @@ const defaultProps = {
   boxTitle: '',
 };
 
-const Profile = ({ readOnly, boxTitle }) => (
+const Profile = ({ readOnly, boxTitle, onHandleSubmit }) => (
   <Formik
     initialValues={{
       name: '',
@@ -35,9 +36,7 @@ const Profile = ({ readOnly, boxTitle }) => (
       },
       lonlat: {},
     }}
-    onSubmit={(values) => {
-      console.log(values);
-    }}
+    onSubmit={onHandleSubmit}
   >
     {({ values, handleSubmit, handleChange }) => (
       <Form onSubmit={handleSubmit} id="profile-form">
