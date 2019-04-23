@@ -18,9 +18,9 @@ const Select = ({
   select, options, onChange, readOnly,
 }) => (
   <Container>
-    <StyledSelect name="genre" onChange={onChange} readOnly={readOnly}>
+    <StyledSelect name="genre" value={select} onChange={onChange} readOnly={readOnly}>
       {options.map(option => (
-        <option key={option.name} selected={select === option.value} value={option.value}>
+        <option key={option.name} value={option.value}>
           {option.name}
         </option>
       ))}
