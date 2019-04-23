@@ -11,7 +11,7 @@ const propTypes = {
   google: t.shape({
     maps: t.object,
   }).isRequired,
-  markers: t.arrayOf(t.object),
+  markers: t.arrayOf(t.string),
   onMarkerDragEnd: t.func,
   onMapClick: t.func,
   readOnly: t.bool,
@@ -19,38 +19,48 @@ const propTypes = {
 
 const defaultProps = {
   onReady: () => {},
-  markers: [],
   onMarkerDragEnd: () => {},
   onMapClick: () => {},
+  markers: [],
   readOnly: false,
 };
 
+const getLocations = markers => markers
+  .filter(e => !!e)
+  .map(r => r.replace(/[a-zA-Z()]|\s\(/g, ''))
+  .map((t) => {
+    const lonlat = t.split(' ');
+    return { lat: lonlat[0], lng: lonlat[1] };
+  });
+
 const Maps = ({
   onReady, onMarkerDragEnd, google, markers, onMapClick, readOnly,
-}) => (
-  <Container>
-    <Map
-      google={google}
-      zoom={14}
-      clicable={!readOnly}
-      onClick={onMapClick}
-      onReady={onReady}
-      center={markers[0]}
-    >
-      {markers.length > 0
-        && markers.map(mark => (
-          <Marker
-            key={JSON.stringify(mark).concat(Math.random())}
-            title="The marker`s title will appear as a tooltip."
-            draggable={!readOnly}
-            name="SOMA"
-            onDragend={onMarkerDragEnd}
-            position={{ lat: mark.lat, lng: mark.lng }}
-          />
-        ))}
-    </Map>
-  </Container>
-);
+}) => {
+  const locations = getLocations(markers);
+
+  return (
+    <Container>
+      <Map
+        google={google}
+        zoom={14}
+        clicable={!readOnly}
+        onClick={onMapClick}
+        onReady={onReady}
+        center={locations[0]}
+      >
+        {locations.length > 0
+          && locations.map(mark => (
+            <Marker
+              key={JSON.stringify(mark).concat(Math.random())}
+              draggable={!readOnly}
+              onDragend={onMarkerDragEnd}
+              position={{ lat: mark.lat, lng: mark.lng }}
+            />
+          ))}
+      </Map>
+    </Container>
+  );
+};
 
 Maps.propTypes = propTypes;
 Maps.defaultProps = defaultProps;
