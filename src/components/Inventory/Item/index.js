@@ -5,7 +5,7 @@ import { Container, Name, Value } from './styles';
 
 const propTypes = {
   name: t.string.isRequired,
-  value: t.string.isRequired,
+  value: t.string,
   readOnly: t.bool,
   handleChange: t.func,
   onBlur: t.func,
@@ -13,6 +13,7 @@ const propTypes = {
 };
 
 const defaultProps = {
+  value: '',
   readOnly: false,
   handleChange: () => {},
   onBlur: () => {},
