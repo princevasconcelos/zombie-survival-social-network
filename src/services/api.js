@@ -40,12 +40,21 @@ const updateAccount = (formData, id) => fetch(`${baseUrl}/people/${id}.json`, {
   .then(response => response.json())
   .catch(error => error);
 
+const reportSurvivor = (formData, id) => fetch(`${baseUrl}/people/${id}/report_infection.json`, {
+  method: 'post',
+  headers: postHeaders,
+  body: formData,
+})
+  .then(response => response.json())
+  .catch(error => error);
+
 const API = {
   get,
   getReports,
   getSurvivors,
   postSurvivor,
   updateAccount,
+  reportSurvivor,
 };
 
 export default API;
