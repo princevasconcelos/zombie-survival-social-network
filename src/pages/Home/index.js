@@ -1,6 +1,18 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import t from 'prop-types';
-import { withRouter } from 'react-router-dom';
+
+import {
+  requestGetReports,
+  requestReportSuccess,
+  requestReportFailed,
+} from '../../stores/reducers/report';
+
+import {
+  requestGetSurvivors,
+  requestSurvivorFailed,
+  requestSurvivorSuccess,
+} from '../../stores/reducers/survivor';
 
 import API from '../../services/api';
 
@@ -15,113 +27,77 @@ import Maps from '../../components/Maps';
 import Header from './Header';
 
 class Home extends React.Component {
-  state = {
-    user: null,
-    reports: [],
-    reportError: null,
-    survivors: [],
-    survivorError: null,
-    markers: [],
-  };
-
   static propTypes = {
-    location: t.objectOf(t.string).isRequired,
-  };
+    user: t.shape({
+      data: t.object,
+    }).isRequired,
+    reports: t.shape({
+      data: t.array,
+      error: t.bool,
+    }).isRequired,
+    survivors: t.shape({
+      data: t.array,
+      error: t.bool,
+    }).isRequired,
 
-  isComponentMounted = false;
+    requestGetReports: t.func.isRequired,
+    requestReportSuccess: t.func.isRequired,
+    requestReportFailed: t.func.isRequired,
+    requestGetSurvivors: t.func.isRequired,
+    requestSurvivorFailed: t.func.isRequired,
+    requestSurvivorSuccess: t.func.isRequired,
+  };
 
   componentDidMount() {
-    this.isComponentMounted = true;
-    const { location } = this.props;
-
-    if (location.search) {
-      const params = new URLSearchParams(location.search);
-      const id = params.get('id');
-      const name = params.get('name');
-      const age = params.get('age');
-      const lonlat = params.get('lonlat');
-      const items = params.get('items');
-
-      const itemsProfile = this.getProfileItemsFormat(items);
-      if (id) {
-        this.setState({
-          user: {
-            id,
-            name,
-            age,
-            lonlat,
-            items: itemsProfile,
-          },
-        });
-      }
-    }
-    this.storeReports();
-    this.storeSurvivors();
+    const { reports, survivors } = this.props;
+    if (reports.data.length === 0) this.fetchReports();
+    if (survivors.data.length === 0) this.fetchSurvivors();
   }
 
-  componentWillUnmount() {
-    this.isComponentMounted = false;
-  }
-
-  getProfileItemsFormat = items => items
-    .split(',')
-    .map(e => e.split('-'))
-    .reduce((prev, curr) => {
-      prev[curr[0]] = curr[1];
-      return prev;
-    }, {});
-
-  storeReports = async () => {
+  fetchReports = async () => {
+    const { requestGetReports, requestReportSuccess, requestReportFailed } = this.props;
+    requestGetReports();
     const reports = await API.getReports();
-    if (!reports || reports.error) return;
-    Promise.all(reports.map(async report => API.get(report).then(r => r.report)))
-      .then(data => this.isComponentMounted && this.setState({ reports: data }))
-      .catch(error => this.isComponentMounted && this.setState({ reportError: error }));
+    if (!reports || reports.error) return requestReportFailed(true);
+    return Promise.all(reports.map(async report => API.get(report).then(r => r.report)))
+      .then(data => requestReportSuccess(data))
+      .catch(error => requestReportFailed(error));
   };
 
-  storeSurvivors = async () => {
+  fetchSurvivors = async () => {
+    const { requestGetSurvivors, requestSurvivorFailed, requestSurvivorSuccess } = this.props;
+    requestGetSurvivors();
     const survivors = await API.getSurvivors();
-    if (!survivors || survivors.error) return this.isComponentMounted && this.setState({ survivorError: true });
-    const markers = await this.getSurvivorsLocation(survivors);
-    return this.isComponentMounted && this.setState({ survivors, markers });
+    if (!survivors || survivors.error) return requestSurvivorFailed(true);
+    return requestSurvivorSuccess(survivors);
   };
-
-  getSurvivorsLocation = survivors => new Promise((resolve, reject) => {
-    const markers = survivors
-      .map(e => e.lonlat)
-      .filter(e => !!e)
-      .map(e => e.replace(/[a-zA-Z()]|\s\(/g, ''))
-      .map((e) => {
-        const latlon = e.split(' ');
-        return { lat: latlon[1], lng: latlon[0] };
-      });
-    if (!markers) return reject(new Error());
-    return resolve(markers);
-  });
 
   render() {
     const {
-      reports, reportError, survivors, survivorError, markers, user,
-    } = this.state;
+      user: { data },
+      reports,
+      survivors,
+    } = this.props;
     return (
       <>
         <Header />
         <StyledMain>
-          <Reports data={reports} error={reportError} />
+          <Reports data={reports.data} error={reports.error} />
 
-          {user && (
+          {data.id && (
             <Box title="Profile" icon="edit" link="/survivor/42d2dh23">
-              <Profile data={user} boxTitle="Current inventory" readOnly />
+              <Profile data={data} boxTitle="Current inventory" readOnly />
             </Box>
           )}
 
-          <Box title={user ? 'Find survivors near you' : 'All Survivors Registered'} withBorder>
-            <Maps markers={markers} readOnly />
+          <Box title={data.id ? 'Find survivors near you' : 'All Survivors Registered'} withBorder>
+            <Maps readOnly />
+            {/* markers={markers} */}
           </Box>
 
-          {user && (
+          {data.id && (
             <Box title="Report or Trade" margin="70px 0 0 0">
-              <Survivors data={survivors} error={survivorError} />
+              <Survivors data={survivors.data} error={survivors.error} />
             </Box>
           )}
         </StyledMain>
@@ -130,4 +106,20 @@ class Home extends React.Component {
   }
 }
 
-export default withRouter(Home);
+const mapStateToProps = ({ user, survivors, reports }) => ({
+  user,
+  survivors,
+  reports,
+});
+
+export default connect(
+  mapStateToProps,
+  {
+    requestGetReports,
+    requestReportSuccess,
+    requestReportFailed,
+    requestGetSurvivors,
+    requestSurvivorFailed,
+    requestSurvivorSuccess,
+  },
+)(Home);
