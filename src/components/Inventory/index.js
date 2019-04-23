@@ -5,7 +5,7 @@ import Box from '../Box';
 import Item from './Item';
 
 const propTypes = {
-  items: t.objectOf(t.string).isRequired,
+  items: t.arrayOf(t.object).isRequired,
   onChange: t.func,
   onBlur: t.func,
   readOnly: t.bool,
@@ -26,7 +26,8 @@ const Inventory = ({
     <Item
       name="Water"
       color="Water"
-      value={items.Water}
+      position={0}
+      value={items[0].quantity}
       handleChange={onChange}
       onBlur={onBlur}
       readOnly={readOnly}
@@ -34,7 +35,8 @@ const Inventory = ({
     <Item
       name="Food"
       color="Food"
-      value={items.Food}
+      position={1}
+      value={items[1].quantity}
       handleChange={onChange}
       onBlur={onBlur}
       readOnly={readOnly}
@@ -42,7 +44,8 @@ const Inventory = ({
     <Item
       name="Medication"
       color="Medication"
-      value={items.Medication}
+      position={2}
+      value={items[2].quantity}
       handleChange={onChange}
       onBlur={onBlur}
       readOnly={readOnly}
@@ -50,7 +53,8 @@ const Inventory = ({
     <Item
       name="Ammunition"
       color="Ammunition"
-      value={items.Ammunition}
+      position={3}
+      value={items[3].quantity}
       onBlur={onBlur}
       handleChange={onChange}
       readOnly={readOnly}

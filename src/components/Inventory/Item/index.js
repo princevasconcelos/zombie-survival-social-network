@@ -5,11 +5,12 @@ import { Container, Name, Value } from './styles';
 
 const propTypes = {
   name: t.string.isRequired,
-  value: t.string,
+  value: t.oneOfType([t.string, t.number]),
   readOnly: t.bool,
   handleChange: t.func,
   onBlur: t.func,
   color: t.string.isRequired,
+  position: t.number.isRequired,
 };
 
 const defaultProps = {
@@ -20,12 +21,12 @@ const defaultProps = {
 };
 
 const Item = ({
-  name, value, readOnly, handleChange, onBlur, color,
+  name, value, position, readOnly, handleChange, onBlur, color,
 }) => (
   <Container>
     <Name>{name}</Name>
     <Value
-      name={`items.${name}`}
+      name={`items.${position}.quantity`}
       placeholder="0"
       value={value}
       onChange={(event) => {

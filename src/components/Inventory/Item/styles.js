@@ -23,7 +23,7 @@ const Value = styled.input`
   text-align: center;
   border: none;
   font-size: ${styles.sizes.xxlarge};
-  color: ${({ color }) => styles.colors.items[color]};
+  color: ${({ color, value }) => (value ? styles.colors.items[color] : styles.colors.blackLight)};
 
   ${({ readOnly }) => readOnly
     && `
