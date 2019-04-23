@@ -4,7 +4,7 @@ import t from 'prop-types';
 import { StyledInput, StyledLabel, Container } from './styles';
 
 const propTypes = {
-  value: t.string.isRequired,
+  value: t.oneOfType([t.string, t.number]).isRequired,
   onChange: t.func.isRequired,
   onBlur: t.func.isRequired,
   label: t.string.isRequired,
