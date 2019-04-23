@@ -6,8 +6,7 @@ const Header = styled.header`
   height: 50px;
   text-align: center;
   font-size: ${styles.sizes.large};
-  font-weight: bold;
-  color: ${styles.colors.primary};
+  color: ${styles.colors.secondary};
   margin-bottom: 16px;
 `;
 
@@ -24,7 +23,7 @@ const Container = styled.div`
 `;
 
 const Floating = styled.div`
-  display: flex;
+  display: ${({ isLoading }) => (isLoading ? 'none' : 'flex')};
   cursor: pointer;
   position: absolute;
   right: 8px;
