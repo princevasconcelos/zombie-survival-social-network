@@ -22,7 +22,7 @@ import Loading from '../../components/Loading';
 
 class Account extends React.Component {
   state = {
-    isEditting: false,
+    isEditing: false,
   };
 
   static propTypes = {
@@ -46,12 +46,10 @@ class Account extends React.Component {
 
   componentDidMount() {
     const {
-      match: {
-        params: { url },
-      },
+      match: { path },
     } = this.props;
 
-    if (url === '/account') this.setState({ isEditting: true });
+    if (path === '/account') this.setState({ isEditing: true });
   }
 
   getUserLocation = () => {
@@ -87,11 +85,6 @@ class Account extends React.Component {
     history.goBack();
   };
 
-  formDataItemsFormat = items => Object.entries(items)
-    .filter(e => e[1])
-    .map(e => e.join(':'))
-    .join(';');
-
   handleSubmit = async ({
     age, genre, items, name,
   }) => {
@@ -105,19 +98,22 @@ class Account extends React.Component {
 
     requestCreateUser();
 
-    const itemsFormData = this.formDataItemsFormat(items);
-
     const formData = new FormData();
     formData.append('person[name]', name);
     formData.append('person[age]', +age);
     formData.append('person[gender]', genre);
     formData.append('person[lonlat]', lonlat);
-    formData.append('items', itemsFormData);
 
     let response = {};
     if (isEditing) {
       response = await API.updateAccount(formData, id);
     } else {
+      formData.append(
+        'items',
+        items
+          .filter(e => e.quantity > 0)
+          .reduce((prev, curr) => `${prev}${curr.item.name}:${curr.quantity};`, ''),
+      );
       response = await API.postSurvivor(formData);
     }
 
@@ -139,11 +135,11 @@ class Account extends React.Component {
     const {
       user: { data, error, loading },
     } = this.props;
-    const { isEditting } = this.state;
+    const { isEditing } = this.state;
     return (
       <Container>
         <Header>
-          {isEditting ? 'Edit profile' : 'New account '}
+          {isEditing ? 'Edit profile' : 'New account '}
           <Floating onClick={this.handleClose} isLoading={loading}>
             <Icon name="close" />
           </Floating>
