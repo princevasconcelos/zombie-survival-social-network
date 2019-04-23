@@ -62,29 +62,68 @@ class Account extends React.Component {
     history.goBack();
   };
 
+  getItemsFormDataFormat = items => Object.entries(items)
+    .filter(e => e[1])
+    .map(e => e.join(':'))
+    .join(';');
+
+  getItemsQueryStringFormat = items => items.replace(/(:)|(;)/g, (regex, colonMatch) => {
+    if (colonMatch) {
+      return '-';
+    }
+    return ',';
+  });
+
   handleSubmit = async (formValues) => {
     const {
       age, genre, items, name,
     } = formValues;
-    const { userLocation } = this.state;
 
-    const formattedValidItems = Object.entries(items)
-      .filter(e => e[1])
-      .map(e => e.join(':'))
-      .join(';');
+    const {
+      userLocation: { lat, lng },
+    } = this.state;
 
-    const lonlat = `Point(${userLocation.lng} ${userLocation.lat})`;
+    const itemsFormData = this.getItemsFormDataFormat(items);
+
+    const lonlat = `Point(${lng} ${lat})`;
 
     const formData = new FormData();
     formData.append('person[name]', name);
     formData.append('person[age]', +age);
     formData.append('person[gender]', genre);
     formData.append('person[lonlat]', lonlat);
-    formData.append('items', formattedValidItems);
+    formData.append('items', itemsFormData);
 
     const response = await API.postSurvivor(formData);
 
-    response.id ? console.log('worked') : this.setState({ apiErrors: response });
+    this.handleResponse(response, {
+      itemsFormData,
+      name,
+      age,
+      lng,
+      lat,
+    });
+  };
+
+  handleResponse = (response, formValues) => {
+    const { id } = response;
+
+    if (!id) return this.setState({ apiErrors: response });
+
+    const { history } = this.props;
+    const {
+      itemsFormData, name, age, lng, lat,
+    } = formValues;
+
+    const itemsQueryFormat = this.getItemsQueryStringFormat(itemsFormData);
+
+    let queryString = `?id=${id}&name=${name}&age=${age}&items=${itemsQueryFormat}`;
+
+    if (lng && lat) {
+      queryString += `&lonlat=${lng},${lat}`;
+    }
+
+    return history.push('/'.concat(queryString));
   };
 
   render() {
