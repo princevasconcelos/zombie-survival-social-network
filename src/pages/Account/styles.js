@@ -6,7 +6,7 @@ const Header = styled.header`
   height: 50px;
   text-align: center;
   font-size: ${styles.sizes.large};
-  color: ${styles.colors.secondary};
+  color: ${styles.colors.black};
   margin-bottom: 16px;
 `;
 
