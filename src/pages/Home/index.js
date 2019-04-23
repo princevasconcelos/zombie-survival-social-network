@@ -42,6 +42,7 @@ class Home extends React.Component {
       const lonlat = params.get('lonlat');
       const items = params.get('items');
 
+      const itemsProfile = this.getProfileItemsFormat(items);
       if (id) {
         this.setState({
           user: {
@@ -49,7 +50,7 @@ class Home extends React.Component {
             name,
             age,
             lonlat,
-            items,
+            items: itemsProfile,
           },
         });
       }
@@ -61,6 +62,14 @@ class Home extends React.Component {
   componentWillUnmount() {
     this.isComponentMounted = false;
   }
+
+  getProfileItemsFormat = items => items
+    .split(',')
+    .map(e => e.split('-'))
+    .reduce((prev, curr) => {
+      prev[curr[0]] = curr[1];
+      return prev;
+    }, {});
 
   storeReports = async () => {
     const reports = await API.getReports();
@@ -102,7 +111,7 @@ class Home extends React.Component {
 
           {user && (
             <Box title="Profile" icon="edit" link="/survivor/42d2dh23">
-              <Profile boxTitle="Current inventory" readOnly />
+              <Profile data={user} boxTitle="Current inventory" readOnly />
             </Box>
           )}
 
