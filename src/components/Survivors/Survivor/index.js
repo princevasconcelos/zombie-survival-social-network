@@ -13,6 +13,8 @@ const propTypes = {
   age: t.number,
   gender: t.string,
   isInfected: t.bool,
+  onReportClick: t.func.isRequired,
+  id: t.string,
 };
 
 const defaultProps = {
@@ -20,6 +22,7 @@ const defaultProps = {
   age: 0,
   gender: '',
   isInfected: false,
+  id: '',
 };
 
 const getInfectedItem = name => (
@@ -30,7 +33,7 @@ const getInfectedItem = name => (
 );
 
 const Survivor = ({
-  name, age, gender, isInfected,
+  name, age, gender, isInfected, onReportClick, id,
 }) => {
   if (isInfected) return getInfectedItem(name);
   return (
@@ -42,7 +45,9 @@ const Survivor = ({
         </Row>
         <Name>{name}</Name>
       </Link>
-      <Button color="red">Report</Button>
+      <Button onClick={() => onReportClick(id)} color="red">
+        Report
+      </Button>
     </Item>
   );
 };
