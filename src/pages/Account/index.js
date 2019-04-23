@@ -114,7 +114,7 @@ class Account extends React.Component {
     formData.append('items', itemsFormData);
 
     const response = await API.postSurvivor(formData);
-
+    response.items = items;
     this.handleResponse(response);
   };
 
@@ -123,7 +123,7 @@ class Account extends React.Component {
     const { id } = response;
 
     if (!id) return requestUserFailed(response);
-    response.items = [{ Water: 3 }, { Food: 4 }];
+
     requestUserSuccess(response);
     return history.push('/');
   };
