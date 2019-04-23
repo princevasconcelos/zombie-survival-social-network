@@ -7,9 +7,7 @@ const base = styled.span`
   text-align: center;
 `;
 
-const Label = styled(base)`
-  font-weight: bold;
-`;
+const Label = styled(base)``;
 
 const Value = styled(base)`
   font-size: ${styles.sizes.medium};
