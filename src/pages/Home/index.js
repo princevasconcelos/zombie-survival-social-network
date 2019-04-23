@@ -85,19 +85,18 @@ class Home extends React.Component {
           <Reports data={reports.data} error={reports.error} />
 
           {data.id && (
-            <Box title="Profile" icon="edit" link="/survivor/42d2dh23">
+            <Box title="Profile" icon="edit" link="/account">
               <Profile data={data} boxTitle="Current inventory" readOnly />
             </Box>
           )}
 
           <Box title={data.id ? 'Find survivors near you' : 'All Survivors Registered'} withBorder>
-            <Maps readOnly />
-            {/* markers={markers} */}
+            <Maps readOnly markers={survivors.data.map(e => e.lonlat).filter(e => !!e)} />
           </Box>
 
           {data.id && (
             <Box title="Report or Trade" margin="70px 0 0 0">
-              <Survivors data={survivors.data} error={survivors.error} />
+              <Survivors data={survivors.data} error={survivors.error} userId={data.id} />
             </Box>
           )}
         </StyledMain>
