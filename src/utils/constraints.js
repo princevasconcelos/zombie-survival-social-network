@@ -6,6 +6,7 @@ const styles = {
     blue: '#4d90fe',
     black: '#3f3e3e',
     blacker: '#414143',
+    blackLight: '#777',
     darkGray: '#a9a9a9',
     lightGray: '#d3d3d3',
     lightestGray: '#f2f2f2',
