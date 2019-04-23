@@ -6,6 +6,7 @@ import percentageFormat from '../../utils/functions';
 
 import Report from './Report';
 import Loading from '../Loading';
+import Error from '../Error';
 
 const propTypes = {
   data: t.arrayOf(t.object).isRequired,
@@ -17,32 +18,22 @@ const defaultProps = {
 };
 
 const Reports = ({ data, error }) => {
-  if (!data) return <Loading />;
-  if (error) return <span>Error</span>;
+  if (data.length === 0) return <Loading />;
+  if (error) return <Error msg="Cant access reports right now" />;
   const [infected, nonInfected, itemsPerPerson, pointsLost] = data;
   return (
     <ReportList>
-      {infected && (
-        <Report label={infected.description}>{percentageFormat(infected.average_infected)}</Report>
-      )}
-      {nonInfected && (
-        <Report label={nonInfected.description}>
-          {percentageFormat(nonInfected.average_healthy)}
+      <Report label="Infected">{percentageFormat(infected.average_infected)}</Report>
+      <Report label="Non Infected">{percentageFormat(nonInfected.average_healthy)}</Report>
+      <>
+        <Report label="People Items">
+          {itemsPerPerson.average_items_quantity_per_person.toFixed()}
         </Report>
-      )}
-      {itemsPerPerson && (
-        <>
-          <Report label={itemsPerPerson.description}>
-            {itemsPerPerson.average_items_quantity_per_person.toFixed()}
-          </Report>
-          <Report label={itemsPerPerson.description}>
-            {itemsPerPerson.average_items_quantity_per_healthy_person.toFixed()}
-          </Report>
-        </>
-      )}
-      {pointsLost && (
-        <Report label={pointsLost.description}>{pointsLost.total_points_lost.toFixed()}</Report>
-      )}
+        <Report label="Health People Items">
+          {itemsPerPerson.average_items_quantity_per_healthy_person.toFixed()}
+        </Report>
+      </>
+      <Report label="Infected Points">{pointsLost.total_points_lost.toFixed()}</Report>
     </ReportList>
   );
 };
