@@ -2,9 +2,9 @@ import React from 'react';
 
 import StyledHeader, { Container } from './styles';
 
-import ResponsiveText from '../ResponsiveText';
-import Search from '../Search';
-import Link from '../Link';
+import ResponsiveText from '../../../components/ResponsiveText';
+import Search from '../../../components/Search';
+import Link from '../../../components/Link';
 
 const Header = () => (
   <StyledHeader>

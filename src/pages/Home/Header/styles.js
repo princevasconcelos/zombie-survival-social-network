@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import styles from '../../utils/constraints';
+import styles from '../../../utils/constraints';
 
 const StyledHeader = styled.header`
   display: flex;
