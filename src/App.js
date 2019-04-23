@@ -15,7 +15,7 @@ const App = () => (
       <GlobalStyle />
       <Route path="/" exact component={Home} />
       <Route path="/register" component={Account} />
-      <Route path="/survivor/:id" component={Account} />
+      <Route path="/account" component={Account} />
       <Route path="/trade" component={Trade} />
     </Router>
   </Provider>
