@@ -10,7 +10,36 @@ const INITIAL_STATE = {
     age: '',
     gender: 'M',
     lonlat: '',
-    items: [],
+    items: [
+      {
+        quantity: 0,
+        item: {
+          name: 'Water',
+          points: 4,
+        },
+      },
+      {
+        quantity: 0,
+        item: {
+          name: 'Food',
+          points: 3,
+        },
+      },
+      {
+        quantity: 0,
+        item: {
+          name: 'Medication',
+          points: 2,
+        },
+      },
+      {
+        quantity: 0,
+        item: {
+          name: 'Ammunition',
+          points: 1,
+        },
+      },
+    ],
   },
   loading: false,
   error: null,
