@@ -21,7 +21,7 @@ const propTypes = {
     name: t.string,
     age: t.string,
     gender: t.string,
-    items: t.objectOf(t.string),
+    items: t.arrayOf(t.object),
   }),
 };
 
@@ -35,30 +35,65 @@ const defaultProps = {
     age: '',
     gender: 'M',
     lonlat: {},
-    items: {
-      Water: '',
-      Food: '',
-      Medication: '',
-      Ammunition: '',
-    },
+    items: [
+      {
+        quantity: 0,
+        item: {
+          name: 'Water',
+          points: 4,
+        },
+      },
+      {
+        quantity: 0,
+        item: {
+          name: 'Food',
+          points: 3,
+        },
+      },
+      {
+        quantity: 0,
+        item: {
+          name: 'Medication',
+          points: 2,
+        },
+      },
+      {
+        quantity: 0,
+        item: {
+          name: 'Ammunition',
+          points: 1,
+        },
+      },
+    ],
   },
 };
 
 const ProfileSchema = yup.object().shape({
   name: yup.string().required('Name is required'),
   age: yup.string().required('Age is required'),
-  items: yup
-    .object({
-      Water: yup.string().matches(/\w*/),
-      Food: yup.string().matches(/\w*/),
-      Medication: yup.string().matches(/\w*/),
-      Ammunition: yup.string().matches(/\w*/),
-    })
-    .test(
-      'at-least-one-number',
-      'You must provide at least one',
-      value => !!(value.Water || value.Food || value.Medication || value.Ammunition),
-    ),
+  items: yup.array().of(
+    yup
+      .object()
+      .shape({
+        quantity: yup.number().required(),
+      })
+      .test('at-least-one-number', 'You must provide at least one', (value) => {
+        console.log(value);
+        return !!value.quantity;
+      }),
+  ),
+  // items: yup
+  //   .object({
+  //     Water: yup.string().matches(/\w*/),
+  //     Food: yup.string().matches(/\w*/),
+  //     Medication: yup.string().matches(/\w*/),
+  //     Ammunition: yup.string().matches(/\w*/),
+  //   })
+  //   .test(
+  //     'at-least-one-number',
+  //     'You must provide at least one',
+  //     value => !!(value.Water || value.Food || value.Medication || value.Ammunition),
+  //   ),
 });
 
 const Profile = ({
@@ -118,7 +153,9 @@ const Profile = ({
           onBlur={handleBlur}
           readOnly={readOnly}
         />
-        {!readOnly && errors.items && touched.items && <small>{errors.items}</small>}
+        {!readOnly && errors.items && !errors.items.some(e => !e) && touched.items && (
+        <small>{errors.items}</small>
+        )}
       </Form>
     )}
   </Formik>
