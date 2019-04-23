@@ -11,18 +11,20 @@ const propTypes = {
   withBorder: t.bool,
   icon: t.string,
   link: t.string,
+  margin: t.string,
 };
 
 const defaultProps = {
   withBorder: false,
   icon: '',
   link: '',
+  margin: '',
 };
 
 const Box = ({
-  title, children, withBorder, icon, link,
+  title, children, withBorder, icon, link, margin,
 }) => (
-  <StyledBox withBorder={withBorder}>
+  <StyledBox withBorder={withBorder} margin={margin}>
     <Title>
       {title}
 

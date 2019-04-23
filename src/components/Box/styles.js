@@ -30,6 +30,8 @@ const StyledBox = styled.section`
   `};
   padding: 16px 8px 0;
   margin-top: 32px;
+
+  ${({ margin }) => margin && `margin: ${margin}`};
   width: 100%;
 `;
 
