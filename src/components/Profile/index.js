@@ -17,6 +17,12 @@ const propTypes = {
   boxTitle: t.string,
   onHandleSubmit: t.func,
   apiErrors: t.objectOf(t.array),
+  data: t.shape({
+    name: t.string,
+    age: t.string,
+    gender: t.string,
+    items: t.objectOf(t.string),
+  }),
 };
 
 const defaultProps = {
@@ -24,6 +30,18 @@ const defaultProps = {
   boxTitle: '',
   onHandleSubmit: () => {},
   apiErrors: {},
+  data: {
+    name: '',
+    age: '',
+    gender: 'M',
+    lonlat: {},
+    items: {
+      Water: '',
+      Food: '',
+      Medication: '',
+      Ammunition: '',
+    },
+  },
 };
 
 const ProfileSchema = yup.object().shape({
@@ -44,20 +62,15 @@ const ProfileSchema = yup.object().shape({
 });
 
 const Profile = ({
-  readOnly, boxTitle, onHandleSubmit, apiErrors,
+  readOnly, boxTitle, onHandleSubmit, apiErrors, data,
 }) => (
   <Formik
     initialValues={{
-      name: '',
-      age: '',
-      genre: 'M',
-      items: {
-        Water: '',
-        Food: '',
-        Medication: '',
-        Ammunition: '',
-      },
-      lonlat: {},
+      name: data.name,
+      age: data.age,
+      genre: data.gender,
+      items: data.items,
+      lonlat: data.lonlat,
     }}
     validationSchema={ProfileSchema}
     onSubmit={onHandleSubmit}
