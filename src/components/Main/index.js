@@ -1,4 +1,6 @@
 import React from 'react';
+import t from 'prop-types';
+import { withRouter } from 'react-router-dom';
 
 import API from '../../services/api';
 
@@ -19,9 +21,23 @@ class Main extends React.Component {
     markers: [],
   };
 
+  static propTypes = {
+    location: t.objectOf(t.string).isRequired,
+  };
+
   isComponentMounted = false;
 
   componentDidMount() {
+    const { location } = this.props;
+    if (location.search) {
+      const params = new URLSearchParams(location.search);
+      const id = params.get('id');
+      const name = params.get('name');
+      const age = params.get('age');
+      const lonlat = params.get('lonlat');
+      const items = params.get('items');
+    }
+
     this.isComponentMounted = true;
     this.storeReports();
     this.storeSurvivors();
@@ -65,7 +81,7 @@ class Main extends React.Component {
     } = this.state;
     return (
       <StyledMain>
-        {/* <Reports /> */}
+        <Reports />
         <Box title="Profile" icon="edit" link="/survivor/42d2dh23">
           <Profile boxTitle="Current inventory" readOnly />
         </Box>
@@ -80,4 +96,4 @@ class Main extends React.Component {
   }
 }
 
-export default Main;
+export default withRouter(Main);
