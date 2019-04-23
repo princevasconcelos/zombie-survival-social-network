@@ -6,11 +6,11 @@ const INITIAL_STATE = {
   error: null,
 };
 
-export const fetchSurvivors = () => ({
+export const fetchReports = () => ({
   type: FETCH_REQUEST,
 });
 
-const survivorReducer = (state = INITIAL_STATE, action) => {
+const reportReducer = (state = INITIAL_STATE, action) => {
   const { payload, type } = action;
   switch (type) {
     case FETCH_REQUEST:
@@ -20,4 +20,4 @@ const survivorReducer = (state = INITIAL_STATE, action) => {
   }
 };
 
-export default survivorReducer;
+export default reportReducer;
