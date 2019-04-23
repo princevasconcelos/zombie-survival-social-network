@@ -10,12 +10,14 @@ import Icon from '../../components/Icon';
 import Button from '../../components/Button';
 import Maps from '../../components/Maps';
 import Box from '../../components/Box';
+import Loading from '../../components/Loading';
 
 class Account extends React.Component {
   state = {
     id: '',
     userLocation: {},
     apiErrors: null,
+    loading: false,
   };
 
   static propTypes = {
@@ -75,6 +77,7 @@ class Account extends React.Component {
   });
 
   handleSubmit = async (formValues) => {
+    this.setState({ loading: true });
     const {
       age, genre, items, name,
     } = formValues;
@@ -108,7 +111,7 @@ class Account extends React.Component {
   handleResponse = (response, formValues) => {
     const { id } = response;
 
-    if (!id) return this.setState({ apiErrors: response });
+    if (!id) return this.setState({ apiErrors: response, loading: false });
 
     const { history } = this.props;
     const {
@@ -127,23 +130,32 @@ class Account extends React.Component {
   };
 
   render() {
-    const { id, userLocation, apiErrors } = this.state;
+    const {
+      id, userLocation, apiErrors, loading,
+    } = this.state;
     return (
       <Container>
         <Header>
           {id ? 'Edit profile' : 'New account '}
-          <Floating onClick={this.handleClose}>
+          <Floating onClick={this.handleClose} isLoading={loading}>
             <Icon name="close" />
           </Floating>
         </Header>
-        <Button color="blue" type="submit" form="profile-form">
-          Save
-        </Button>
+
+        {loading ? (
+          <Loading />
+        ) : (
+          <Button color="tertiary" type="submit" form="profile-form">
+            Save
+          </Button>
+        )}
+
         <Profile
           boxTitle="Choose your items"
           onHandleSubmit={this.handleSubmit}
           apiErrors={apiErrors}
         />
+
         <Box title="Select your current location" withBorder>
           <Maps
             onReady={this.getUserLocation}
