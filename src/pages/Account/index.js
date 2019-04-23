@@ -22,7 +22,7 @@ import Loading from '../../components/Loading';
 
 class Account extends React.Component {
   state = {
-    id: '',
+    isEditting: false,
   };
 
   static propTypes = {
@@ -47,11 +47,11 @@ class Account extends React.Component {
   componentDidMount() {
     const {
       match: {
-        params: { id },
+        params: { url },
       },
     } = this.props;
 
-    if (id) this.setState({ id });
+    if (url === '/account') this.setState({ isEditting: true });
   }
 
   getUserLocation = () => {
@@ -98,9 +98,10 @@ class Account extends React.Component {
     const {
       requestCreateUser,
       user: {
-        data: { lonlat },
+        data: { lonlat, id },
       },
     } = this.props;
+    const { isEditing } = this.state;
 
     requestCreateUser();
 
@@ -113,7 +114,13 @@ class Account extends React.Component {
     formData.append('person[lonlat]', lonlat);
     formData.append('items', itemsFormData);
 
-    const response = await API.postSurvivor(formData);
+    let response = {};
+    if (isEditing) {
+      response = await API.updateAccount(formData, id);
+    } else {
+      response = await API.postSurvivor(formData);
+    }
+
     response.items = items;
     this.handleResponse(response);
   };
@@ -130,17 +137,13 @@ class Account extends React.Component {
 
   render() {
     const {
-      user: {
-        data: { lonlat },
-        error,
-        loading,
-      },
+      user: { data, error, loading },
     } = this.props;
-    const { id } = this.state;
+    const { isEditting } = this.state;
     return (
       <Container>
         <Header>
-          {id ? 'Edit profile' : 'New account '}
+          {isEditting ? 'Edit profile' : 'New account '}
           <Floating onClick={this.handleClose} isLoading={loading}>
             <Icon name="close" />
           </Floating>
@@ -155,6 +158,7 @@ class Account extends React.Component {
         )}
 
         <Profile
+          data={data}
           boxTitle="Choose your items"
           onHandleSubmit={this.handleSubmit}
           apiErrors={error}
@@ -164,7 +168,7 @@ class Account extends React.Component {
           <Maps
             onReady={this.getUserLocation}
             onMarkerDragEnd={this.onMarkerChangeHandler}
-            markers={[lonlat]}
+            markers={[data.lonlat]}
             onMapClick={this.onMapClickHandler}
           />
         </Box>
