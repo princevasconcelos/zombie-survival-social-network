@@ -19,10 +19,10 @@ const propTypes = {
   apiErrors: t.objectOf(t.array),
   data: t.shape({
     name: t.string,
-    age: t.string,
+    age: t.oneOfType([t.string, t.number]),
     gender: t.string,
     items: t.arrayOf(t.object),
-  }),
+  }).isRequired,
 };
 
 const defaultProps = {
@@ -30,58 +30,23 @@ const defaultProps = {
   boxTitle: '',
   onHandleSubmit: () => {},
   apiErrors: {},
-  data: {
-    name: '',
-    age: '',
-    gender: 'M',
-    lonlat: {},
-    items: [
-      {
-        quantity: 0,
-        item: {
-          name: 'Water',
-          points: 4,
-        },
-      },
-      {
-        quantity: 0,
-        item: {
-          name: 'Food',
-          points: 3,
-        },
-      },
-      {
-        quantity: 0,
-        item: {
-          name: 'Medication',
-          points: 2,
-        },
-      },
-      {
-        quantity: 0,
-        item: {
-          name: 'Ammunition',
-          points: 1,
-        },
-      },
-    ],
-  },
 };
 
 const ProfileSchema = yup.object().shape({
   name: yup.string().required('Name is required'),
   age: yup.string().required('Age is required'),
-  items: yup.array().of(
-    yup
-      .object()
-      .shape({
-        quantity: yup.number().required(),
-      })
-      .test('at-least-one-number', 'You must provide at least one', (value) => {
-        console.log(value);
-        return !!value.quantity;
-      }),
-  ),
+  // items: yup.array().of(
+  //   yup
+  //     .object()
+  //     .shape({
+  //       quantity: yup.number().required(),
+  //     })
+  //     .test('at-least-one-number', 'You must provide at least one', (value) => {
+  //       console.log(value);
+  //       return !!value.quantity;
+  //     }),
+  // ),
+
   // items: yup
   //   .object({
   //     Water: yup.string().matches(/\w*/),
@@ -143,7 +108,12 @@ const Profile = ({
             id="age"
             readOnly={readOnly}
           />
-          <Select onChange={handleChange} options={genres} readOnly={readOnly} />
+          <Select
+            select={values.genre}
+            onChange={handleChange}
+            options={genres}
+            readOnly={readOnly}
+          />
         </Row>
         {!readOnly && errors.age && touched.age && <small>{errors.age}</small>}
         <Inventory
