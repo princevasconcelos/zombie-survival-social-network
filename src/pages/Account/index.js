@@ -1,5 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import t from 'prop-types';
+
+import {
+  storeLocation,
+  requestCreateUser,
+  requestUserSuccess,
+  requestUserFailed,
+} from '../../stores/reducers/user';
 
 import API from '../../services/api';
 
@@ -15,12 +23,19 @@ import Loading from '../../components/Loading';
 class Account extends React.Component {
   state = {
     id: '',
-    userLocation: {},
-    apiErrors: null,
-    loading: false,
   };
 
   static propTypes = {
+    user: t.shape({
+      data: t.object,
+      error: t.objectOf(t.array),
+      loading: t.bool,
+    }).isRequired,
+    storeLocation: t.func.isRequired,
+    requestCreateUser: t.func.isRequired,
+    requestUserSuccess: t.func.isRequired,
+    requestUserFailed: t.func.isRequired,
+
     match: t.shape({
       params: t.objectOf(t.string),
     }).isRequired,
@@ -43,20 +58,28 @@ class Account extends React.Component {
     navigator.geolocation.getCurrentPosition(this.onLocationGranted, this.onLocationRejected);
   };
 
-  onLocationGranted = ({ coords: { latitude, longitude } }) => this.setState({ userLocation: { lat: latitude, lng: longitude } });
-
-  onLocationRejected = () => console.log('n permitiu');
-
-  onMarkerChangeHandler = (mapProps, map, coords) => {
-    const { latLng } = coords;
-    this.setState({ userLocation: { lat: latLng.lat(), lng: latLng.lng() } });
+  onLocationGranted = ({ coords: { latitude, longitude } }) => {
+    const { storeLocation } = this.props;
+    storeLocation(`POINT (${latitude} ${longitude})`);
   };
 
-  onMapClickHandler = (mapProps, map, coords) => {
-    const { userLocation } = this.state;
-    if (userLocation.lat && userLocation.lng) return;
+  onLocationRejected = () => this.getUserLocation();
+
+  onMarkerChangeHandler = (mapProps, map, coords) => {
+    const { storeLocation } = this.props;
     const { latLng } = coords;
-    this.setState({ userLocation: { lat: latLng.lat(), lng: latLng.lng() } });
+    storeLocation(`POINT (${latLng.lat()} ${latLng.lng()})`);
+  };
+
+  onMapClickHandler = (mapProps, map, { latLng }) => {
+    const {
+      user: {
+        data: { lonlat },
+      },
+      storeLocation,
+    } = this.props;
+    if (lonlat) return;
+    storeLocation(`POINT (${latLng.lat()} ${latLng.lng()})`);
   };
 
   handleClose = () => {
@@ -64,31 +87,24 @@ class Account extends React.Component {
     history.goBack();
   };
 
-  getItemsFormDataFormat = items => Object.entries(items)
+  formDataItemsFormat = items => Object.entries(items)
     .filter(e => e[1])
     .map(e => e.join(':'))
     .join(';');
 
-  getItemsQueryStringFormat = items => items.replace(/(:)|(;)/g, (regex, colonMatch) => {
-    if (colonMatch) {
-      return '-';
-    }
-    return ',';
-  });
-
-  handleSubmit = async (formValues) => {
-    this.setState({ loading: true });
+  handleSubmit = async ({
+    age, genre, items, name,
+  }) => {
     const {
-      age, genre, items, name,
-    } = formValues;
+      requestCreateUser,
+      user: {
+        data: { lonlat },
+      },
+    } = this.props;
 
-    const {
-      userLocation: { lat, lng },
-    } = this.state;
+    requestCreateUser();
 
-    const itemsFormData = this.getItemsFormDataFormat(items);
-
-    const lonlat = `Point(${lng} ${lat})`;
+    const itemsFormData = this.formDataItemsFormat(items);
 
     const formData = new FormData();
     formData.append('person[name]', name);
@@ -99,40 +115,28 @@ class Account extends React.Component {
 
     const response = await API.postSurvivor(formData);
 
-    this.handleResponse(response, {
-      itemsFormData,
-      name,
-      age,
-      lng,
-      lat,
-    });
+    this.handleResponse(response);
   };
 
-  handleResponse = (response, formValues) => {
+  handleResponse = (response) => {
+    const { history, requestUserSuccess, requestUserFailed } = this.props;
     const { id } = response;
 
-    if (!id) return this.setState({ apiErrors: response, loading: false });
-
-    const { history } = this.props;
-    const {
-      itemsFormData, name, age, lng, lat,
-    } = formValues;
-
-    const itemsQueryFormat = this.getItemsQueryStringFormat(itemsFormData);
-
-    let queryString = `?id=${id}&name=${name}&age=${age}&items=${itemsQueryFormat}`;
-
-    if (lng && lat) {
-      queryString += `&lonlat=${lng},${lat}`;
-    }
-
-    return history.push('/'.concat(queryString));
+    if (!id) return requestUserFailed(response);
+    response.items = [{ Water: 3 }, { Food: 4 }];
+    requestUserSuccess(response);
+    return history.push('/');
   };
 
   render() {
     const {
-      id, userLocation, apiErrors, loading,
-    } = this.state;
+      user: {
+        data: { lonlat },
+        error,
+        loading,
+      },
+    } = this.props;
+    const { id } = this.state;
     return (
       <Container>
         <Header>
@@ -153,14 +157,14 @@ class Account extends React.Component {
         <Profile
           boxTitle="Choose your items"
           onHandleSubmit={this.handleSubmit}
-          apiErrors={apiErrors}
+          apiErrors={error}
         />
 
         <Box title="Select your current location" withBorder>
           <Maps
             onReady={this.getUserLocation}
             onMarkerDragEnd={this.onMarkerChangeHandler}
-            markers={[userLocation]}
+            markers={[lonlat]}
             onMapClick={this.onMapClickHandler}
           />
         </Box>
@@ -169,4 +173,16 @@ class Account extends React.Component {
   }
 }
 
-export default Account;
+const mapStateToProps = ({ user }) => ({
+  user,
+});
+
+export default connect(
+  mapStateToProps,
+  {
+    storeLocation,
+    requestCreateUser,
+    requestUserSuccess,
+    requestUserFailed,
+  },
+)(Account);
