@@ -32,11 +32,20 @@ const postSurvivor = formData => fetch(`${baseUrl}/people.json`, {
   .then(response => response.json())
   .catch(error => error);
 
+const updateAccount = (formData, id) => fetch(`${baseUrl}/people/${id}.json`, {
+  method: 'patch',
+  headers: postHeaders,
+  body: formData,
+})
+  .then(response => response.json())
+  .catch(error => error);
+
 const API = {
   get,
   getReports,
   getSurvivors,
   postSurvivor,
+  updateAccount,
 };
 
 export default API;
