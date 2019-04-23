@@ -7,17 +7,20 @@ const propTypes = {
   options: t.arrayOf(t.objectOf(t.string)).isRequired,
   onChange: t.func.isRequired,
   readOnly: t.bool,
+  select: t.string.isRequired,
 };
 
 const defaultProps = {
   readOnly: false,
 };
 
-const Select = ({ options, onChange, readOnly }) => (
+const Select = ({
+  select, options, onChange, readOnly,
+}) => (
   <Container>
     <StyledSelect name="genre" onChange={onChange} readOnly={readOnly}>
       {options.map(option => (
-        <option key={option.name} value={option.value}>
+        <option key={option.name} selected={select === option.value} value={option.value}>
           {option.name}
         </option>
       ))}
