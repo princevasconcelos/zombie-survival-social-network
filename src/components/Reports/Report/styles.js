@@ -12,15 +12,13 @@ const Label = styled(base)`
 `;
 
 const Value = styled(base)`
-  background-color: greenyellow;
-  font-family: 'Spicy Rice';
   font-size: ${styles.sizes.medium};
+  color: ${styles.colors.darkGray};
 `;
 
 const Item = styled.li`
-  width: 100px;
-  height: auto;
   list-style-type: none;
+  margin-bottom: 8px;
 `;
 
 export { Item, Label, Value };
