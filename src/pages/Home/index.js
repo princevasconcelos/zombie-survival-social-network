@@ -120,7 +120,7 @@ class Home extends React.Component {
           </Box>
 
           {user && (
-            <Box title="Report or Trade">
+            <Box title="Report or Trade" margin="70px 0 0 0">
               <Survivors data={survivors} error={survivorError} />
             </Box>
           )}
