@@ -1,4 +1,5 @@
 const STORE_LOCATION = 'STORE_LOCATION';
+const STORE_REPORTED_SURVIVOR = 'STORE_REPORTED_SURVIVOR';
 
 const REQUEST_CREATE_USER = 'REQUEST_CREATE_USER';
 const REQUEST_USER_SUCCESS = 'REQUEST_USER_SUCCESS';
@@ -10,6 +11,7 @@ const INITIAL_STATE = {
     age: '',
     gender: 'M',
     lonlat: '',
+    reports: [],
     items: [
       {
         quantity: 0,
@@ -64,6 +66,11 @@ export const requestUserSuccess = payload => ({
   payload,
 });
 
+export const storeReportedSurvivor = payload => ({
+  type: STORE_REPORTED_SURVIVOR,
+  payload,
+});
+
 const userReducer = (state = INITIAL_STATE, action) => {
   const { payload, type } = action;
   switch (type) {
@@ -85,6 +92,11 @@ const userReducer = (state = INITIAL_STATE, action) => {
         ...state,
         loading: false,
         error: payload,
+      };
+    case STORE_REPORTED_SURVIVOR:
+      return {
+        ...state,
+        data: { ...state.data, reports: state.data.reports.concat(action.payload) },
       };
     default:
       return state;
