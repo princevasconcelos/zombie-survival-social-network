@@ -37,7 +37,7 @@ const Survivor = ({
   if (isInfected) return getInfectedItem(name);
   return (
     <Item isInfected={false}>
-      <Link to="/survivor/2324124123" hoverEffect={false} full>
+      <Link to={`/survivor/${name}`} hoverEffect={false} full>
         <Bio>
           <b>Level</b>
           <span>{`${age}`}</span>
