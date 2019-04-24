@@ -1,7 +1,10 @@
 import React from 'react';
 import t from 'prop-types';
+import { connect } from 'react-redux';
 
 import API from '../../services/api';
+
+import { storeReportedSurvivor } from '../../stores/reducers/user';
 
 import Loading from '../Loading';
 import Error from '../Error';
@@ -10,40 +13,54 @@ import { Container, List } from './styles';
 import Item from './Survivor';
 
 const propTypes = {
-  data: t.arrayOf(t.object).isRequired,
+  storeReportedSurvivor: t.func.isRequired,
+  survivors: t.arrayOf(t.object).isRequired,
   error: t.oneOfType([t.bool, t.string]),
-  userId: t.string,
+  user: t.shape({
+    data: t.object,
+  }).isRequired,
 };
 
 const defaultProps = {
-  error: 'Survivors list is not avaliable',
-  userId: '',
+  error: '',
 };
 
-const Survivors = ({ data, error, userId }) => {
-  if (data.length === 0) return <Loading />;
-  if (error) return <Error msg={error} />;
+const Survivors = ({
+  storeReportedSurvivor,
+  survivors,
+  error,
+  user: {
+    data: { id, reports },
+  },
+}) => {
+  if (survivors.length === 0) return <Loading />;
+  if (error) return <Error msg="Survivors list is not avaliable" />;
 
-  const reportSurvivor = (id) => {
+  const reportSurvivor = (survivorId) => {
     const formData = new FormData();
-    formData.append('infected', id);
-    API.reportSurvivor(formData, userId);
+    formData.append('infected', survivorId);
+    storeReportedSurvivor(survivorId);
+    API.reportSurvivor(formData, id);
   };
 
   return (
     <Container>
       <List>
-        {data.length > 0
-          && data.map(survivor => (
-            <Item
-              key={survivor.location}
-              id={survivor.location.split('/').pop()}
-              name={survivor.name}
-              age={survivor.age}
-              isInfected={survivor['infected?']}
-              onReportClick={reportSurvivor}
-            />
-          ))}
+        {survivors.length > 0
+          && survivors.map((survivor) => {
+            const currentId = survivor.location.split('/').pop();
+            return (
+              <Item
+                key={survivor.location}
+                id={currentId}
+                name={survivor.name}
+                age={survivor.age}
+                isInfected={survivor['infected?']}
+                isReported={reports.includes(currentId)}
+                onReportClick={reportSurvivor}
+              />
+            );
+          })}
       </List>
     </Container>
   );
@@ -52,4 +69,11 @@ const Survivors = ({ data, error, userId }) => {
 Survivors.propTypes = propTypes;
 Survivors.defaultProps = defaultProps;
 
-export default Survivors;
+const mapStateToProps = ({ user }) => ({
+  user,
+});
+
+export default connect(
+  mapStateToProps,
+  { storeReportedSurvivor },
+)(Survivors);
