@@ -41,10 +41,15 @@ const Trade = ({
       desiredItems: arturItems,
     }}
   >
-    {({ values, handleChange, handleSubmit }) => (
+    {({ values, handleChange }) => (
       <Container>
         <div style={{ width: '100%' }}>
-          <Inventory items={values.offerItems} onChange={handleChange} boxTitle="Your items" />
+          <Inventory
+            items={values.offerItems}
+            onChange={handleChange}
+            forObject="offerItems"
+            boxTitle="Your items"
+          />
         </div>
 
         <Score>
@@ -52,14 +57,15 @@ const Trade = ({
           <span>POINTS: 12</span>
         </Score>
 
-        {/* <div style={{ width: '100%' }}>
+        <div style={{ width: '100%' }}>
           <Inventory
             inverted
             items={values.desiredItems}
             onChange={handleChange}
+            forObject="desiredItems"
             boxTitle="Artur items"
           />
-        </div> */}
+        </div>
       </Container>
     )}
   </Formik>
@@ -72,5 +78,3 @@ const mapStateToProsp = ({ user }) => ({
 });
 
 export default connect(mapStateToProsp)(Trade);
-
-// 1 unico dispatch para atualizar meus items quando salvar

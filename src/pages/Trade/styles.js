@@ -12,9 +12,9 @@ const Container = styled.div`
 const Score = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
   justify-content: center;
   align-items: center;
+  background-color: red;
 `;
 
 export { Container, Score };
