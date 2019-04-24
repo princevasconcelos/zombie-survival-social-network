@@ -9,6 +9,7 @@ const propTypes = {
   title: t.string.isRequired,
   children: t.oneOfType([t.element.isRequired, t.arrayOf(t.element)]).isRequired,
   withBorder: t.bool,
+  inverted: t.bool,
   icon: t.string,
   link: t.string,
   margin: t.string,
@@ -16,16 +17,17 @@ const propTypes = {
 
 const defaultProps = {
   withBorder: false,
+  inverted: false,
   icon: '',
   link: '',
   margin: '',
 };
 
 const Box = ({
-  title, children, withBorder, icon, link, margin,
+  title, children, withBorder, icon, link, margin, inverted,
 }) => (
-  <StyledBox withBorder={withBorder} margin={margin}>
-    <Title>
+  <StyledBox withBorder={withBorder} margin={margin} inverted={inverted}>
+    <Title inverted={inverted}>
       {title}
 
       {icon && link && (

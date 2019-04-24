@@ -8,7 +8,7 @@ const Title = styled.h2`
   position: absolute;
   background-color: white;
   padding: 0 6px;
-  top: -15px;
+  ${({ inverted }) => (inverted ? 'bottom: -15px;' : 'top: -15px;')};
   color: ${styles.colors.darkGray};
 `;
 
@@ -20,16 +20,34 @@ const StyledBox = styled.section`
   display: flex;
   justify-content: center;
   position: relative;
-  ${({ withBorder }) => withBorder
+  ${({ withBorder, inverted }) => withBorder
     && `
-    border-top: 1px solid ${styles.colors.lightGray};
+
+    ${
+  inverted
+    ? `
+      border-bottom: 1px solid ${styles.colors.lightGray};
+    `
+    : `
+      border-top: 1px solid ${styles.colors.lightGray};
+    `
+}
+
 
     @media (min-width: ${styles.screens.desktop}) {
       border: 1px solid ${styles.colors.lightGray};
     }
   `};
-  padding: 16px 8px 0;
-  margin-top: 32px;
+
+  ${({ inverted }) => (inverted
+    ? `
+      padding: 0 8px 16px;
+      margin-bottom: 32px;
+    `
+    : `
+      padding: 16px 8px 0;
+      margin-top: 32px;
+    `)};
 
   ${({ margin }) => margin && `margin: ${margin}`};
   width: 100%;
