@@ -22,16 +22,6 @@ const Item = styled.li`
   box-shadow: inset 0px -1px 0px ${styles.colors.lightGray};
 `;
 
-const Row = styled.div`
-  display: flex;
-  align-items: center;
-
-  i {
-    color: ${styles.colors.darkGray};
-    font-size: ${styles.sizes.xmedium};
-  }
-`;
-
 const Symbol = styled.span`
   font-size: ${styles.sizes.xxlarge};
   font-weight: 100;
@@ -39,6 +29,13 @@ const Symbol = styled.span`
 `;
 
 const Bio = styled.span`
+  min-width: 45px;
+  margin-right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
   color: ${styles.colors.darkGray};
   font-weight: bold;
 `;
@@ -49,6 +46,7 @@ const Name = styled.span`
   color: ${styles.colors.black};
   font-size: ${styles.sizes.xxdefault};
   margin-left: 6px;
+  padding: 20px 0;
 `;
 
 const Button = styled.button`
@@ -74,5 +72,5 @@ const Button = styled.button`
 `;
 
 export {
-  Item, Row, Name, Button, Bio, Symbol,
+  Item, Name, Button, Bio, Symbol,
 };

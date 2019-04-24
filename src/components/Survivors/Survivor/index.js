@@ -5,13 +5,12 @@ import Link from '../../Link';
 import Button from '../../Button';
 
 import {
-  Item, Row, Name, Bio, Symbol,
+  Item, Name, Bio, Symbol,
 } from './styles';
 
 const propTypes = {
   name: t.string,
   age: t.number,
-  gender: t.string,
   isInfected: t.bool,
   onReportClick: t.func.isRequired,
   id: t.string,
@@ -20,7 +19,6 @@ const propTypes = {
 const defaultProps = {
   name: '',
   age: 0,
-  gender: '',
   isInfected: false,
   id: '',
 };
@@ -33,16 +31,17 @@ const getInfectedItem = name => (
 );
 
 const Survivor = ({
-  name, age, gender, isInfected, onReportClick, id,
+  name, age, isInfected, onReportClick, id,
 }) => {
   if (isInfected) return getInfectedItem(name);
   return (
     <Item isInfected={false}>
-      <Link to="/survivor/2324124123" hoverEffect={false}>
-        <Row>
-          {gender === 'M' ? <i>&#9794;</i> : <i>&#9792;</i>}
-          <Bio>{'Level '.concat(age)}</Bio>
-        </Row>
+      <Link to="/survivor/2324124123" hoverEffect={false} full>
+        <Bio>
+          <b>Level</b>
+          <span>{`${age}`}</span>
+        </Bio>
+
         <Name>{name}</Name>
       </Link>
       <Button onClick={() => onReportClick(id)} color="red">

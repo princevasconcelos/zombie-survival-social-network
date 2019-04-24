@@ -40,7 +40,6 @@ const Survivors = ({ data, error, userId }) => {
               id={survivor.location.split('/').pop()}
               name={survivor.name}
               age={survivor.age}
-              gender={survivor.gender}
               isInfected={survivor['infected?']}
               onReportClick={reportSurvivor}
             />
