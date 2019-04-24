@@ -96,7 +96,7 @@ class Home extends React.Component {
 
           {data.id && (
             <Box title="Report or Trade" margin="70px 0 0 0">
-              <Survivors data={survivors.data} error={survivors.error} userId={data.id} />
+              <Survivors survivors={survivors.data} error={survivors.error} />
             </Box>
           )}
         </StyledMain>
