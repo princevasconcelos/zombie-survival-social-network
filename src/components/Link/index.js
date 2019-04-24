@@ -18,7 +18,7 @@ const defaultProps = {
 const Link = ({
   children, to, hoverEffect, full,
 }) => (
-  <StyledLink to={to} hovereefect={hoverEffect.toString()} full={full}>
+  <StyledLink to={to} hovereefect={hoverEffect.toString()} full={full.toString()}>
     {children}
   </StyledLink>
 );
