@@ -148,7 +148,7 @@ class Account extends React.Component {
         {loading ? (
           <Loading />
         ) : (
-          <Button color="tertiary" type="submit" form="profile-form">
+          <Button color="blacker" type="submit" form="profile-form">
             Save
           </Button>
         )}
