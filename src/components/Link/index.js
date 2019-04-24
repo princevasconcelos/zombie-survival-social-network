@@ -7,14 +7,18 @@ const propTypes = {
   children: t.oneOfType([t.string, t.element, t.arrayOf(t.element)]).isRequired,
   to: t.string.isRequired,
   hoverEffect: t.bool,
+  full: t.bool,
 };
 
 const defaultProps = {
   hoverEffect: true,
+  full: false,
 };
 
-const Link = ({ children, to, hoverEffect }) => (
-  <StyledLink to={to} hovereefect={hoverEffect.toString()}>
+const Link = ({
+  children, to, hoverEffect, full,
+}) => (
+  <StyledLink to={to} hovereefect={hoverEffect.toString()} full={full}>
     {children}
   </StyledLink>
 );

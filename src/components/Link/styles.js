@@ -8,6 +8,13 @@ const StyledLink = styled(Link)`
   color: ${styles.colors.black};
   font-weight: bold;
 
+  ${({ full }) => full
+    && `
+    display: flex;
+    width: 100%;
+    height: 100%
+  `};
+
   ${({ hovereefect }) => hovereefect === 'true'
     && `
     :hover {
