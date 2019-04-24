@@ -14,6 +14,7 @@ const propTypes = {
   isInfected: t.bool,
   onReportClick: t.func.isRequired,
   id: t.string,
+  isReported: t.bool.isRequired,
 };
 
 const defaultProps = {
@@ -31,7 +32,7 @@ const getInfectedItem = name => (
 );
 
 const Survivor = ({
-  name, age, isInfected, onReportClick, id,
+  name, age, isInfected, onReportClick, id, isReported,
 }) => {
   if (isInfected) return getInfectedItem(name);
   return (
@@ -44,8 +45,12 @@ const Survivor = ({
 
         <Name>{name}</Name>
       </Link>
-      <Button onClick={() => onReportClick(id)} color="red">
-        Report
+      <Button
+        isActive={isReported}
+        onClick={() => onReportClick(id)}
+        color={isReported ? 'green' : 'red'}
+      >
+        {isReported ? 'Reported' : 'Report'}
       </Button>
     </Item>
   );

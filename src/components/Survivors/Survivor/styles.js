@@ -49,28 +49,6 @@ const Name = styled.span`
   padding: 20px 0;
 `;
 
-const Button = styled.button`
-  cursor: pointer;
-  height: 24px;
-  min-width: 80px;
-  background-color: transparent;
-  color: ${styles.colors.red};
-  border: 1px solid ${styles.colors.red};
-  border-radius: 1000px;
-  text-transform: uppercase;
-  font-size: ${styles.sizes.small};
-  font-weight: bold;
-
-  :hover {
-    background-color: ${styles.colors.red};
-    color: ${styles.colors.white};
-  }
-
-  :focus {
-    outline: none;
-  }
-`;
-
 export {
-  Item, Name, Button, Bio, Symbol,
+  Item, Name, Bio, Symbol,
 };
