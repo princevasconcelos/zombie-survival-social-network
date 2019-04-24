@@ -5,29 +5,32 @@ import Box from '../Box';
 import Item from './Item';
 
 const propTypes = {
-  items: t.arrayOf(t.object).isRequired,
   onChange: t.func,
   onBlur: t.func,
-  readOnly: t.bool,
+  items: t.arrayOf(t.object).isRequired,
+
   boxTitle: t.string,
+  forObject: t.string.isRequired,
+  readOnly: t.bool,
   inverted: t.bool,
 };
 
 const defaultProps = {
   onChange: () => {},
   onBlur: () => {},
-  readOnly: false,
   boxTitle: '',
+  readOnly: false,
   inverted: false,
 };
 
 const Inventory = ({
-  items, onChange, onBlur, readOnly, boxTitle, inverted,
+  items, onChange, onBlur, readOnly, boxTitle, inverted, forObject,
 }) => (
   <Box title={boxTitle} withBorder inverted={inverted}>
     <Item
-      name="Water"
+      name="water"
       color="Water"
+      forObject={forObject}
       position={0}
       value={items[0].quantity}
       handleChange={onChange}
@@ -35,8 +38,9 @@ const Inventory = ({
       readOnly={readOnly}
     />
     <Item
-      name="Food"
+      name="food"
       color="Food"
+      forObject={forObject}
       position={1}
       value={items[1].quantity}
       handleChange={onChange}
@@ -44,8 +48,9 @@ const Inventory = ({
       readOnly={readOnly}
     />
     <Item
-      name="Medication"
+      name="medication"
       color="Medication"
+      forObject={forObject}
       position={2}
       value={items[2].quantity}
       handleChange={onChange}
@@ -53,8 +58,9 @@ const Inventory = ({
       readOnly={readOnly}
     />
     <Item
-      name="Ammunition"
+      name="ammunition"
       color="Ammunition"
+      forObject={forObject}
       position={3}
       value={items[3].quantity}
       onBlur={onBlur}
