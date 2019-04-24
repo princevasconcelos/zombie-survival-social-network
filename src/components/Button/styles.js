@@ -5,7 +5,7 @@ import styles from '../../utils/constraints';
 const StyledButton = styled.button`
   cursor: pointer;
   height: 32px;
-  min-width: 80px;
+  min-width: 90px;
   background-color: transparent;
   color: ${({ color }) => styles.colors[color]};
   border: 1px solid ${({ color }) => styles.colors[color]};
@@ -22,6 +22,12 @@ const StyledButton = styled.button`
   :focus {
     outline: none;
   }
+
+  ${({ isActive, color }) => isActive
+    && `
+    background-color: ${styles.colors[color]};
+    color: ${styles.colors.white};
+  `}
 `;
 
 export default StyledButton;
