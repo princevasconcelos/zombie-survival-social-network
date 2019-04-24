@@ -10,6 +10,7 @@ const propTypes = {
   onBlur: t.func,
   readOnly: t.bool,
   boxTitle: t.string,
+  inverted: t.bool,
 };
 
 const defaultProps = {
@@ -17,12 +18,13 @@ const defaultProps = {
   onBlur: () => {},
   readOnly: false,
   boxTitle: '',
+  inverted: false,
 };
 
 const Inventory = ({
-  items, onChange, onBlur, readOnly, boxTitle,
+  items, onChange, onBlur, readOnly, boxTitle, inverted,
 }) => (
-  <Box title={boxTitle} withBorder>
+  <Box title={boxTitle} withBorder inverted={inverted}>
     <Item
       name="Water"
       color="Water"
