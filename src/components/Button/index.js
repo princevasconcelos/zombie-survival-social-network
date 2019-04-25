@@ -10,6 +10,7 @@ const propTypes = {
   form: t.string,
   color: t.string,
   isActive: t.bool,
+  disabled: t.bool,
 };
 
 const defaultProps = {
@@ -18,10 +19,11 @@ const defaultProps = {
   form: '',
   color: 'black',
   isActive: false,
+  disabled: false,
 };
 
 const Button = ({
-  children, onClick, type, form, color, isActive,
+  children, onClick, type, form, color, isActive, disabled,
 }) => (
   <StyledButton
     onClick={isActive ? null : onClick}
@@ -29,6 +31,7 @@ const Button = ({
     form={form}
     color={color}
     isActive={isActive}
+    disabled={disabled}
   >
     {children}
   </StyledButton>
