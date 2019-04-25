@@ -101,6 +101,12 @@ const InputWrapper = styled.div`
 const ItemInput = styled.input`
   width: 70px;
   height: 50px;
+  font-size: ${styles.sizes.xmedium};
+  text-align: center;
+
+  ::placeholder {
+    color: black;
+  }
 `;
 
 const Title = styled.span`

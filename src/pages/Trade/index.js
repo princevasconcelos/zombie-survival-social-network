@@ -22,20 +22,22 @@ import {
 import Inventory from '../../components/Inventory';
 import Icon from '../../components/Icon';
 import Loading from '../../components/Loading';
+import Button from '../../components/Button';
 
 class Trade extends React.Component {
   state = {
-    name: '',
+    yourName: '',
+    yourId: '',
     offerItems: [],
     desiredItems: [],
-    myWater: 0,
-    myFood: 0,
-    myMedication: 0,
-    myAmmunition: 0,
-    yourWater: 0,
-    yourFood: 0,
-    yourMedication: 0,
-    yourAmmunition: 0,
+    myWater: '',
+    myFood: '',
+    myMedication: '',
+    myAmmunition: '',
+    yourWater: '',
+    yourFood: '',
+    yourMedication: '',
+    yourAmmunition: '',
   };
 
   static propTypes = {
@@ -64,15 +66,16 @@ class Trade extends React.Component {
       location: { pathname },
     } = this.props;
 
-    const [name, id] = pathname
+    const [yourName, yourId] = pathname
       .split('/')
       .slice(-1)[0]
       .split('_');
 
-    const response = await API.getItems(id);
+    const response = await API.getItems(yourId);
 
     this.setState({
-      name,
+      yourName,
+      yourId,
       offerItems: items,
       desiredItems: response,
     });
@@ -83,7 +86,35 @@ class Trade extends React.Component {
     history.goBack();
   };
 
-  handleChange = event => this.setState({ [event.target.name]: event.target.value });
+  handleChange = (event) => {
+    if (event.target.value.match(/\D+/g)) {
+      return event.preventDefault();
+    }
+    return this.setState({ [event.target.name]: event.target.value });
+  };
+
+  getMyPicks = () => 'Food:4';
+
+  getMyPayments = () => 'Water:3';
+
+  handleConfirmTrade = async () => {
+    const { yourId } = this.state;
+
+    const {
+      user: {
+        data: { name },
+      },
+    } = this.props;
+
+    const pick = this.getMyPicks();
+    const payment = this.getMyPayments();
+
+    const formData = new FormData();
+    formData.append('consumer[name]', name);
+    formData.append('consumer[pick]', pick);
+    formData.append('consumer[payment]', payment);
+    const response = await API.postTransaction(formData, yourId);
+  };
 
   getPoints = items => items.reduce((prev, curr, i) => prev + curr * (4 - i), 0);
 
@@ -93,7 +124,7 @@ class Trade extends React.Component {
     } = this.props;
 
     const {
-      name,
+      yourName,
       offerItems,
       desiredItems,
       myWater,
@@ -106,7 +137,10 @@ class Trade extends React.Component {
       yourAmmunition,
     } = this.state;
 
-    if (!name) return <Loading />;
+    const myPoints = this.getPoints([myWater, myFood, myMedication, myAmmunition]);
+    const yourPoints = this.getPoints([yourWater, yourFood, yourMedication, yourAmmunition]);
+
+    if (!yourName) return <Loading />;
     return (
       <Formik
         initialValues={{
@@ -125,7 +159,9 @@ class Trade extends React.Component {
                   </Floating>
                 </Title>
               </Header>
-              <button>salvar</button>
+              <Button disabled={myPoints !== yourPoints} onClick={this.handleConfirmTrade}>
+                confirm
+              </Button>
               <Wrapper>
                 <Inventory
                   readOnly
@@ -135,27 +171,76 @@ class Trade extends React.Component {
                   boxTitle="Your items"
                 />
                 <InputWrapper>
-                  <ItemInput type="tel" name="myWater" onChange={this.handleChange} />
-                  <ItemInput type="tel" name="myFood" onChange={this.handleChange} />
-                  <ItemInput type="tel" name="myMedication" onChange={this.handleChange} />
-                  <ItemInput type="tel" name="myAmmunition" onChange={this.handleChange} />
+                  <ItemInput
+                    type="tel"
+                    name="myWater"
+                    value={myWater}
+                    onChange={this.handleChange}
+                    placeholder="0"
+                  />
+
+                  <ItemInput
+                    type="tel"
+                    name="myFood"
+                    value={myFood}
+                    onChange={this.handleChange}
+                    placeholder="0"
+                  />
+
+                  <ItemInput
+                    type="tel"
+                    name="myMedication"
+                    value={myMedication}
+                    onChange={this.handleChange}
+                    placeholder="0"
+                  />
+
+                  <ItemInput
+                    type="tel"
+                    name="myAmmunition"
+                    value={myAmmunition}
+                    onChange={this.handleChange}
+                    placeholder="0"
+                  />
                 </InputWrapper>
               </Wrapper>
 
               <Scoreboard>
-                <Score>{this.getPoints([myWater, myFood, myMedication, myAmmunition])}</Score>
+                <Score>{myPoints}</Score>
                 <Text>points</Text>
-                <Score>
-                  {this.getPoints([yourWater, yourFood, yourMedication, yourAmmunition])}
-                </Score>
+                <Score>{yourPoints}</Score>
               </Scoreboard>
 
               <Wrapper>
                 <InputWrapper>
-                  <ItemInput type="tel" name="yourWater" onChange={this.handleChange} />
-                  <ItemInput type="tel" name="yourFood" onChange={this.handleChange} />
-                  <ItemInput type="tel" name="yourMedication" onChange={this.handleChange} />
-                  <ItemInput type="tel" name="yourAmmunition" onChange={this.handleChange} />
+                  <ItemInput
+                    type="tel"
+                    name="yourWater"
+                    value={yourWater}
+                    onChange={this.handleChange}
+                    placeholder="0"
+                  />
+                  <ItemInput
+                    type="tel"
+                    name="yourFood"
+                    value={yourFood}
+                    onChange={this.handleChange}
+                    placeholder="0"
+                  />
+                  <ItemInput
+                    type="tel"
+                    name="yourMedication"
+                    value={yourMedication}
+                    onChange={this.handleChange}
+                    placeholder="0"
+                  />
+                  <ItemInput
+                    type="tel"
+                    name="yourAmmunition"
+                    value={yourAmmunition}
+                    onChange={this.handleChange}
+                    placeholder="0"
+                  />
                 </InputWrapper>
 
                 <Inventory
@@ -164,7 +249,7 @@ class Trade extends React.Component {
                   items={values.desiredItems}
                   onChange={handleChange}
                   forObject="desiredItems"
-                  boxTitle={`${name} items`}
+                  boxTitle={`${yourName} items`}
                 />
               </Wrapper>
             </Container>
