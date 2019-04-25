@@ -16,7 +16,7 @@ const App = () => (
       <Route path="/" exact component={Home} />
       <Route path="/register" component={Account} />
       <Route path="/account" component={Account} />
-      <Route path="/survivor/:name" component={Trade} />
+      <Route path="/survivor/:id" component={Trade} />
     </Router>
   </Provider>
 );
