@@ -1,6 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import t from 'prop-types';
+import { connect } from 'react-redux';
 
 import {
   requestGetReports,
@@ -14,9 +14,9 @@ import {
   requestSurvivorSuccess,
 } from '../../stores/reducers/survivor';
 
-import API from '../../services/api';
+import { storeItems } from '../../stores/reducers/user';
 
-import StyledMain from './styles';
+import API from '../../services/api';
 
 import Reports from '../../components/Reports';
 import Profile from '../../components/Profile';
@@ -25,6 +25,7 @@ import Survivors from '../../components/Survivors';
 import Maps from '../../components/Maps';
 
 import Header from './Header';
+import StyledMain from './styles';
 
 class Home extends React.Component {
   static propTypes = {
@@ -46,55 +47,73 @@ class Home extends React.Component {
     requestGetSurvivors: t.func.isRequired,
     requestSurvivorFailed: t.func.isRequired,
     requestSurvivorSuccess: t.func.isRequired,
+    storeItems: t.func.isRequired,
   };
 
   componentDidMount() {
-    const { reports, survivors } = this.props;
-    if (reports.data.length === 0) this.fetchReports();
-    if (survivors.data.length === 0) this.fetchSurvivors();
+    this.fetchReports();
+    this.fetchSurvivors();
+    this.fetchItems();
   }
 
   fetchReports = async () => {
     const { requestGetReports, requestReportSuccess, requestReportFailed } = this.props;
     requestGetReports();
     const reports = await API.getReports();
-    if (!reports || reports.error) return requestReportFailed(true);
+    if (!reports) return requestReportFailed();
     return Promise.all(reports.map(async report => API.get(report).then(r => r.report)))
       .then(data => requestReportSuccess(data))
-      .catch(error => requestReportFailed(error));
+      .catch(() => requestReportFailed());
   };
 
   fetchSurvivors = async () => {
     const { requestGetSurvivors, requestSurvivorFailed, requestSurvivorSuccess } = this.props;
     requestGetSurvivors();
     const survivors = await API.getSurvivors();
-    if (!survivors || survivors.error) return requestSurvivorFailed(true);
+    if (!survivors) return requestSurvivorFailed();
     return requestSurvivorSuccess(survivors);
   };
 
-  render() {
+  fetchItems = async () => {
     const {
-      user: { data },
-      reports,
-      survivors,
+      storeItems,
+      user: {
+        data: { id },
+      },
     } = this.props;
+    if (!id) return;
+    const items = await API.getItems(id);
+    if (!items) return;
+    storeItems(items);
+  };
+
+  mapSurvivorsLocation = survivors => survivors.data.map(e => e.lonlat).filter(e => !!e);
+
+  render() {
+    const { user, reports, survivors } = this.props;
+
+    const markers = this.mapSurvivorsLocation(survivors);
+
     return (
       <>
         <Header />
         <StyledMain>
           <Reports data={reports.data} error={reports.error} />
 
-          {data.id && (
+          {user.data.id && (
             <Box title="Profile" icon="edit" link="/account">
-              <Profile data={data} boxTitle="Current inventory" readOnly />
+              <Profile readOnly data={user.data} boxTitle="Current inventory" />
             </Box>
           )}
 
-          <Box title={data.id ? 'Find survivors near you' : 'All Survivors Registered'} withBorder>
-            <Maps readOnly markers={survivors.data.map(e => e.lonlat).filter(e => !!e)} />
+          <Box
+            title={user.data.id ? 'Find survivors near you' : 'All Survivors Registered'}
+            withBorder
+          >
+            <Maps readOnly markers={markers} />
           </Box>
 
-          {data.id && (
+          {user.data.id && (
             <Box title="Report or Trade" margin="70px 0 0 0">
               <Survivors survivors={survivors.data} error={survivors.error} />
             </Box>
@@ -120,5 +139,6 @@ export default connect(
     requestGetSurvivors,
     requestSurvivorFailed,
     requestSurvivorSuccess,
+    storeItems,
   },
 )(Home);
