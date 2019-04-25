@@ -13,52 +13,43 @@ import Row from './Row';
 const genres = [{ name: 'Male', value: 'M' }, { name: 'Female', value: 'F' }];
 
 const propTypes = {
-  readOnly: t.bool,
-  boxTitle: t.string,
   onHandleSubmit: t.func,
+
   apiErrors: t.objectOf(t.array),
+
   data: t.shape({
     name: t.string,
     age: t.oneOfType([t.string, t.number]),
     gender: t.string,
     items: t.arrayOf(t.object),
   }).isRequired,
+
+  boxTitle: t.string,
+  readOnly: t.bool,
 };
 
 const defaultProps = {
-  readOnly: false,
-  boxTitle: '',
   onHandleSubmit: () => {},
   apiErrors: {},
+  boxTitle: '',
+  readOnly: false,
 };
 
 const ProfileSchema = yup.object().shape({
   name: yup.string().required('Name is required'),
   age: yup.string().required('Age is required'),
-  // items: yup.array().of(
-  //   yup
-  //     .object()
-  //     .shape({
-  //       quantity: yup.number().required(),
-  //     })
-  //     .test('at-least-one-number', 'You must provide at least one', (value) => {
-  //       console.log(value);
-  //       return !!value.quantity;
-  //     }),
-  // ),
-
-  // items: yup
-  //   .object({
-  //     Water: yup.string().matches(/\w*/),
-  //     Food: yup.string().matches(/\w*/),
-  //     Medication: yup.string().matches(/\w*/),
-  //     Ammunition: yup.string().matches(/\w*/),
-  //   })
-  //   .test(
-  //     'at-least-one-number',
-  //     'You must provide at least one',
-  //     value => !!(value.Water || value.Food || value.Medication || value.Ammunition),
-  //   ),
+  items: yup
+    .array()
+    .of(
+      yup.object({
+        quantity: yup.string().matches(/\d*/),
+      }),
+    )
+    .test(
+      'at least one',
+      'You must provide at least one',
+      values => !!(values[0].quantity || values[1].quantity || values[2].quantity || values[3].quantity),
+    ),
 });
 
 const Profile = ({
@@ -116,6 +107,7 @@ const Profile = ({
           />
         </Row>
         {!readOnly && errors.age && touched.age && <small>{errors.age}</small>}
+
         <Inventory
           boxTitle={boxTitle}
           items={values.items}
@@ -124,9 +116,7 @@ const Profile = ({
           readOnly={readOnly}
           forObject="items"
         />
-        {!readOnly && errors.items && !errors.items.some(e => !e) && touched.items && (
-        <small>{errors.items}</small>
-        )}
+        {!readOnly && errors.items && touched.items && <small>{errors.items}</small>}
       </Form>
     )}
   </Formik>

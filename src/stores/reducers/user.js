@@ -15,28 +15,28 @@ const INITIAL_STATE = {
     reports: [],
     items: [
       {
-        quantity: 0,
+        quantity: '',
         item: {
           name: 'Water',
           points: 4,
         },
       },
       {
-        quantity: 0,
+        quantity: '',
         item: {
           name: 'Food',
           points: 3,
         },
       },
       {
-        quantity: 0,
+        quantity: '',
         item: {
           name: 'Medication',
           points: 2,
         },
       },
       {
-        quantity: 0,
+        quantity: '',
         item: {
           name: 'Ammunition',
           points: 1,
