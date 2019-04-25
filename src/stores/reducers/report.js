@@ -12,9 +12,8 @@ export const requestGetReports = () => ({
   type: REQUEST_GET_REPORTS,
 });
 
-export const requestReportFailed = payload => ({
+export const requestReportFailed = () => ({
   type: REQUEST_REPORT_FAILED,
-  payload,
 });
 
 export const requestReportSuccess = payload => ({
@@ -40,7 +39,7 @@ const reportReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         loading: false,
-        error: payload,
+        error: true,
       };
     default:
       return state;

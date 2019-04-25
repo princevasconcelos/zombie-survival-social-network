@@ -12,9 +12,8 @@ export const requestGetSurvivors = () => ({
   type: REQUEST_GET_SURVIVORS,
 });
 
-export const requestSurvivorFailed = payload => ({
+export const requestSurvivorFailed = () => ({
   type: REQUEST_SURVIVOR_FAILED,
-  payload,
 });
 
 export const requestSurvivorSuccess = payload => ({
@@ -40,7 +39,7 @@ const survivorReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         loading: false,
-        error: payload,
+        error: true,
       };
     default:
       return state;
