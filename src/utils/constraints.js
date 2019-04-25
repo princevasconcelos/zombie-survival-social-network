@@ -31,6 +31,7 @@ const styles = {
     small: '14px',
   },
   screens: {
+    largePhone: '470px',
     tablet: '900px',
     desktop: '1200px',
   },
