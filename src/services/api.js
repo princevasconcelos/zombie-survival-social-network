@@ -52,6 +52,14 @@ const getItems = id => fetch(`${baseUrl}/people/${id}/properties.json`, getHeade
   .then(response => response.json())
   .catch(error => error);
 
+const postTransaction = (formData, id) => fetch(`${baseUrl}/people/${id}/properties/trade_item.json`, {
+  method: 'post',
+  headers: postHeaders,
+  body: formData,
+})
+  .then(response => response.json())
+  .catch(error => error);
+
 const API = {
   get,
   getItems,
@@ -60,6 +68,7 @@ const API = {
 
   postSurvivor,
   reportSurvivor,
+  postTransaction,
 
   updateAccount,
 };
