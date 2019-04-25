@@ -36,7 +36,7 @@ export const Container = styled.div`
   margin: 0 16px;
   max-width: 430px;
   :hover {
-    box-shadow: 0px 0px 8px ${styles.colors.blue};
+    box-shadow: 0px 0px 3px ${styles.colors.darkGray};
   }
 `;
 
