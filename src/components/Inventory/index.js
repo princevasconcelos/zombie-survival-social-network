@@ -28,41 +28,41 @@ const Inventory = ({
 }) => (
   <Box title={boxTitle} withBorder inverted={inverted}>
     <Item
-      name="water"
+      name="Water"
       color="Water"
       forObject={forObject}
       position={0}
-      value={items[0].quantity}
+      value={(items[0] || []).quantity}
       handleChange={onChange}
       onBlur={onBlur}
       readOnly={readOnly}
     />
     <Item
-      name="food"
+      name="Food"
       color="Food"
       forObject={forObject}
       position={1}
-      value={items[1].quantity}
+      value={(items[1] || []).quantity}
       handleChange={onChange}
       onBlur={onBlur}
       readOnly={readOnly}
     />
     <Item
-      name="medication"
+      name="Medication"
       color="Medication"
       forObject={forObject}
       position={2}
-      value={items[2].quantity}
+      value={(items[2] || []).quantity}
       handleChange={onChange}
       onBlur={onBlur}
       readOnly={readOnly}
     />
     <Item
-      name="ammunition"
+      name="Ammunition"
       color="Ammunition"
       forObject={forObject}
       position={3}
-      value={items[3].quantity}
+      value={(items[3] || []).quantity}
       onBlur={onBlur}
       handleChange={onChange}
       readOnly={readOnly}
