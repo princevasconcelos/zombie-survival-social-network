@@ -137,6 +137,7 @@ class Account extends React.Component {
     const {
       user: { data, error, loading },
     } = this.props;
+    const { lonlat } = data;
 
     const { isEditing } = this.state;
 
@@ -166,10 +167,11 @@ class Account extends React.Component {
 
         <Box title="Select your current location" withBorder>
           <Maps
-            markers={[data.lonlat]}
+            markers={[lonlat]}
             onReady={this.getUserLocation}
             onMarkerDragEnd={this.onMarkerChangeHandler}
             onMapClick={this.onMapClickHandler}
+            center={lonlat}
           />
         </Box>
       </Container>
