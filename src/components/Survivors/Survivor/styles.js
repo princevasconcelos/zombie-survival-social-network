@@ -35,6 +35,7 @@ const Bio = styled.span`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  font-size: ${styles.sizes.xdefault};
 
   color: ${styles.colors.darkGray};
   font-weight: bold;
