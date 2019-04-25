@@ -94,6 +94,9 @@ class Home extends React.Component {
 
     const markers = this.mapSurvivorsLocation(survivors);
 
+    const centerMapPoint = user.data.lonlat || markers[0];
+    const zoom = user.data.lonlat ? 14 : 3;
+
     return (
       <>
         <Header />
@@ -110,7 +113,7 @@ class Home extends React.Component {
             title={user.data.id ? 'Find survivors near you' : 'All Survivors Registered'}
             withBorder
           >
-            <Maps readOnly markers={markers} zoom={4} />
+            <Maps readOnly markers={markers} center={centerMapPoint} zoom={zoom} />
           </Box>
 
           {user.data.id && (
