@@ -122,6 +122,7 @@ const Profile = ({
           onChange={handleChange}
           onBlur={handleBlur}
           readOnly={readOnly}
+          forObject="items"
         />
         {!readOnly && errors.items && !errors.items.some(e => !e) && touched.items && (
         <small>{errors.items}</small>
