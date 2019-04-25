@@ -58,11 +58,16 @@ const postTransaction = (formData, id) => fetch(`${baseUrl}/people/${id}/propert
   body: formData,
 }).catch(error => error);
 
+const fetchSurvivor = id => fetch(`${baseUrl}/people/${id}`, getHeaders)
+  .then(response => response.json())
+  .catch(error => error);
+
 const API = {
   get,
   getItems,
   getReports,
   getSurvivors,
+  fetchSurvivor,
 
   postSurvivor,
   reportSurvivor,
