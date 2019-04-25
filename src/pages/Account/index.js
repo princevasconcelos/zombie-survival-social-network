@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import {
   storeLocation,
+  storeItems,
   requestCreateUser,
   requestUserSuccess,
   requestUserFailed,
@@ -30,6 +31,7 @@ class Account extends React.Component {
     requestUserSuccess: t.func.isRequired,
     requestUserFailed: t.func.isRequired,
     storeLocation: t.func.isRequired,
+    storeItems: t.func.isRequired,
 
     user: t.shape({
       data: t.object,
@@ -119,16 +121,18 @@ class Account extends React.Component {
       response = await API.postSurvivor(formData);
     }
 
-    response.items = items;
-    this.handleResponse(response);
+    this.handleResponse(response, { items });
   };
 
-  handleResponse = (response) => {
-    const { history, requestUserSuccess, requestUserFailed } = this.props;
+  handleResponse = (response, { items }) => {
+    const {
+      history, requestUserSuccess, requestUserFailed, storeItems,
+    } = this.props;
     const { id } = response;
 
     if (!id) return requestUserFailed(response);
 
+    storeItems(items);
     requestUserSuccess(response);
     return history.push('/');
   };
@@ -160,12 +164,12 @@ class Account extends React.Component {
 
         <Profile
           data={data}
-          boxTitle="Choose your items"
+          boxTitle={isEditing ? 'Pick new items' : 'Choose your items'}
           onHandleSubmit={this.handleSubmit}
           apiErrors={error}
         />
 
-        <Box title="Select your current location" withBorder>
+        <Box title={isEditing ? 'Update your location' : 'Select your current location'} withBorder>
           <Maps
             markers={[lonlat]}
             onReady={this.getUserLocation}
@@ -187,6 +191,7 @@ export default connect(
   mapStateToProps,
   {
     storeLocation,
+    storeItems,
     requestCreateUser,
     requestUserSuccess,
     requestUserFailed,
