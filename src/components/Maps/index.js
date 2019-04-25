@@ -8,21 +8,26 @@ import Container from './styles';
 
 const propTypes = {
   onReady: t.func,
+  onMapClick: t.func,
+  onMarkerDragEnd: t.func,
+
   google: t.shape({
     maps: t.object,
   }).isRequired,
+
   markers: t.arrayOf(t.string),
-  onMarkerDragEnd: t.func,
-  onMapClick: t.func,
   readOnly: t.bool,
+  zoom: t.number,
 };
 
 const defaultProps = {
   onReady: () => {},
-  onMarkerDragEnd: () => {},
   onMapClick: () => {},
+  onMarkerDragEnd: () => {},
+
   markers: [],
   readOnly: false,
+  zoom: 14,
 };
 
 const getLocations = markers => markers
@@ -34,7 +39,7 @@ const getLocations = markers => markers
   });
 
 const Maps = ({
-  onReady, onMarkerDragEnd, google, markers, onMapClick, readOnly,
+  onReady, onMarkerDragEnd, google, markers, onMapClick, readOnly, zoom,
 }) => {
   const locations = getLocations(markers);
 
@@ -42,7 +47,7 @@ const Maps = ({
     <Container>
       <Map
         google={google}
-        zoom={14}
+        zoom={zoom}
         clicable={!readOnly}
         onClick={onMapClick}
         onReady={onReady}

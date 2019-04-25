@@ -110,7 +110,7 @@ class Home extends React.Component {
             title={user.data.id ? 'Find survivors near you' : 'All Survivors Registered'}
             withBorder
           >
-            <Maps readOnly markers={markers} />
+            <Maps readOnly markers={markers} zoom={4} />
           </Box>
 
           {user.data.id && (
