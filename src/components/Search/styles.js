@@ -7,6 +7,7 @@ const StyledSearch = styled.input`
   border: none;
   font-size: ${styles.sizes.xdefault};
   width: 100%;
+  height: 100%;
   margin-left: 4px;
 
   color: ${styles.colors.black};
@@ -24,8 +25,9 @@ const StyledSearch = styled.input`
   }
 `;
 
-export const Container = styled.div`
+const Container = styled.div`
   display: flex;
+  position: relative;
   cursor: text;
   flex: 1 1 auto;
   align-items: center;
@@ -40,4 +42,19 @@ export const Container = styled.div`
   }
 `;
 
-export default StyledSearch;
+const SearchResult = styled.div`
+  display: ${({ isVisible }) => (isVisible ? 'flex' : 'none')};
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: -140px;
+  left: 0px;
+  width: 100%;
+  height: 135px;
+  background-color: ${styles.colors.lightestGray};
+  z-index: 1;
+  border: 1px solid #f2f2f2;
+  border-radius: 8px;
+`;
+
+export { StyledSearch, Container, SearchResult };
