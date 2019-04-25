@@ -6,6 +6,8 @@ import { withRouter } from 'react-router-dom';
 
 import API from '../../services/api';
 
+import { requestTransaction, requestTransactionDone } from '../../stores/reducers/transaction';
+
 import {
   Container,
   Score,
@@ -41,11 +43,15 @@ class Trade extends React.Component {
   };
 
   static propTypes = {
+    requestTransaction: t.func.isRequired,
+    requestTransactionDone: t.func.isRequired,
+
     user: t.shape({
       data: t.shape({
         items: t.arrayOf(t.object),
       }),
     }).isRequired,
+
     survivors: t.shape({
       data: t.array,
     }).isRequired,
@@ -53,8 +59,13 @@ class Trade extends React.Component {
     location: t.shape({
       pathname: t.string,
     }).isRequired,
+
     history: t.shape({
       history: t.func,
+    }).isRequired,
+
+    transaction: t.shape({
+      loading: t.bool,
     }).isRequired,
   };
 
@@ -116,7 +127,12 @@ class Trade extends React.Component {
       user: {
         data: { name },
       },
+      history,
+      requestTransaction,
+      requestTransactionDone,
     } = this.props;
+
+    requestTransaction();
 
     const pick = this.getMyPicks();
     const payment = this.getMyPayments();
@@ -126,13 +142,17 @@ class Trade extends React.Component {
     formData.append('consumer[pick]', pick);
     formData.append('consumer[payment]', payment);
     const response = await API.postTransaction(formData, yourId);
+
+    if (!response.ok) return alert('erro na transacao');
+    requestTransactionDone();
+    return history.push('/');
   };
 
   getPoints = items => items.reduce((prev, curr, i) => prev + curr * (4 - i), 0);
 
   render() {
     const {
-      user: { loading },
+      transaction: { loading },
     } = this.props;
 
     const {
@@ -171,9 +191,15 @@ class Trade extends React.Component {
                   </Floating>
                 </Title>
               </Header>
-              <Button disabled={myPoints !== yourPoints} onClick={this.handleConfirmTrade}>
-                confirm
-              </Button>
+
+              {loading ? (
+                <Loading />
+              ) : (
+                <Button disabled={myPoints !== yourPoints} onClick={this.handleConfirmTrade}>
+                  confirm
+                </Button>
+              )}
+
               <Wrapper>
                 <Inventory
                   readOnly
@@ -272,9 +298,15 @@ class Trade extends React.Component {
   }
 }
 
-const mapStateToProps = ({ user, survivors }) => ({
+const mapStateToProps = ({ user, survivors, transaction }) => ({
   user,
   survivors,
+  transaction,
 });
 
-export default withRouter(connect(mapStateToProps)(Trade));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { requestTransaction, requestTransactionDone },
+  )(Trade),
+);
