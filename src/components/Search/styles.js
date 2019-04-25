@@ -44,6 +44,7 @@ const Container = styled.div`
 
 const SearchResult = styled.div`
   display: ${({ isVisible }) => (isVisible ? 'flex' : 'none')};
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   position: absolute;
@@ -57,4 +58,20 @@ const SearchResult = styled.div`
   border-radius: 8px;
 `;
 
-export { StyledSearch, Container, SearchResult };
+const Block = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Text = styled.span`
+  font-size: ${styles.sizes.small};
+  @media (min-width: ${styles.screens.desktop}) {
+    font-size: ${styles.sizes.default};
+  }
+`;
+
+export {
+  StyledSearch, Container, SearchResult, Block, Text,
+};
