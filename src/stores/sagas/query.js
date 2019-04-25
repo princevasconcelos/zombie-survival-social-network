@@ -4,9 +4,9 @@ import API from '../../services/api';
 
 import { storeQuery, discartQuery } from '../reducers/query';
 
-export default function* storeQueryMiddleware({ payload: { data, query } }) {
+export default function* storeQueryMiddleware({ payload }) {
   yield delay(1000);
-  if (!query) return;
+  const { query, data } = payload;
   const match = data.find(e => e.name === query);
   if (!match) return yield put(discartQuery());
   const id = match.location.split('/').slice(-1);
