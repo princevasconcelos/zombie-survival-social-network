@@ -48,13 +48,20 @@ const reportSurvivor = (formData, id) => fetch(`${baseUrl}/people/${id}/report_i
   .then(response => response.json())
   .catch(error => error);
 
+const getItems = id => fetch(`${baseUrl}/people/${id}/properties.json`, getHeaders)
+  .then(response => response.json())
+  .catch(error => error);
+
 const API = {
   get,
+  getItems,
   getReports,
   getSurvivors,
+
   postSurvivor,
-  updateAccount,
   reportSurvivor,
+
+  updateAccount,
 };
 
 export default API;
