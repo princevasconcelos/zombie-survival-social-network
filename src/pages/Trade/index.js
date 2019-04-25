@@ -28,6 +28,14 @@ class Trade extends React.Component {
     name: '',
     offerItems: [],
     desiredItems: [],
+    myWater: 0,
+    myFood: 0,
+    myMedication: 0,
+    myAmmunition: 0,
+    yourWater: 0,
+    yourFood: 0,
+    yourMedication: 0,
+    yourAmmunition: 0,
   };
 
   static propTypes = {
@@ -63,7 +71,6 @@ class Trade extends React.Component {
 
     const response = await API.getItems(id);
 
-    console.log(items);
     this.setState({
       name,
       offerItems: items,
@@ -76,16 +83,28 @@ class Trade extends React.Component {
     history.goBack();
   };
 
-  getPoints = items => items
-    .filter(e => !!e.quantity)
-    .reduce((prev, curr) => prev + +curr.quantity * curr.item.points, 0);
+  handleChange = event => this.setState({ [event.target.name]: event.target.value });
+
+  getPoints = items => items.reduce((prev, curr, i) => prev + curr * (4 - i), 0);
 
   render() {
     const {
       user: { loading },
-    } = this.props; // remover items
+    } = this.props;
 
-    const { name, desiredItems, offerItems } = this.state;
+    const {
+      name,
+      offerItems,
+      desiredItems,
+      myWater,
+      myFood,
+      myMedication,
+      myAmmunition,
+      yourWater,
+      yourFood,
+      yourMedication,
+      yourAmmunition,
+    } = this.state;
 
     if (!name) return <Loading />;
     return (
@@ -97,13 +116,16 @@ class Trade extends React.Component {
       >
         {({ values, handleChange }) => (
           <>
-            {/* <Header>
-              <Title>Trade</Title>
-              <Floating onClick={this.handleClose} isLoading={loading}>
-                <Icon name="close" />
-              </Floating>
-            </Header> */}
             <Container>
+              <Header>
+                <Title>
+                  Trade
+                  <Floating onClick={this.handleClose} isLoading={loading}>
+                    <Icon name="close" />
+                  </Floating>
+                </Title>
+              </Header>
+              <button>salvar</button>
               <Wrapper>
                 <Inventory
                   readOnly
@@ -113,25 +135,27 @@ class Trade extends React.Component {
                   boxTitle="Your items"
                 />
                 <InputWrapper>
-                  <ItemInput type="text" />
-                  <ItemInput type="text" />
-                  <ItemInput type="text" />
-                  <ItemInput type="text" />
+                  <ItemInput type="tel" name="myWater" onChange={this.handleChange} />
+                  <ItemInput type="tel" name="myFood" onChange={this.handleChange} />
+                  <ItemInput type="tel" name="myMedication" onChange={this.handleChange} />
+                  <ItemInput type="tel" name="myAmmunition" onChange={this.handleChange} />
                 </InputWrapper>
               </Wrapper>
 
               <Scoreboard>
-                <Score>{this.getPoints(values.offerItems)}</Score>
+                <Score>{this.getPoints([myWater, myFood, myMedication, myAmmunition])}</Score>
                 <Text>points</Text>
-                <Score>{this.getPoints(values.desiredItems)}</Score>
+                <Score>
+                  {this.getPoints([yourWater, yourFood, yourMedication, yourAmmunition])}
+                </Score>
               </Scoreboard>
 
               <Wrapper>
                 <InputWrapper>
-                  <ItemInput type="text" />
-                  <ItemInput type="text" />
-                  <ItemInput type="text" />
-                  <ItemInput type="text" />
+                  <ItemInput type="tel" name="yourWater" onChange={this.handleChange} />
+                  <ItemInput type="tel" name="yourFood" onChange={this.handleChange} />
+                  <ItemInput type="tel" name="yourMedication" onChange={this.handleChange} />
+                  <ItemInput type="tel" name="yourAmmunition" onChange={this.handleChange} />
                 </InputWrapper>
 
                 <Inventory

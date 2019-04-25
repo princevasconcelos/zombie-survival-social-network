@@ -56,15 +56,26 @@ const Header = styled.header`
   height: 50px;
   font-size: ${styles.sizes.large};
   color: ${styles.colors.black};
-  margin-top: 8px;
+  margin-top: 200px;
+
+  @media (min-height: 600px) {
+    margin-top: 150px;
+  }
+
+  @media (min-height: 800px) {
+    margin-top: 0;
+  }
 `;
 
 const Floating = styled.div`
   display: ${({ isLoading }) => (isLoading ? 'none' : 'flex')};
+  position: absolute;
   cursor: pointer;
   opacity: 0.3;
   width: 32px;
   height: 32px;
+  top: -10px;
+  right: -40px;
   :hover {
     opacity: 0.8;
   }
@@ -95,6 +106,7 @@ const ItemInput = styled.input`
 const Title = styled.span`
   text-align: center;
   padding: 0 60px;
+  position: relative;
 `;
 
 export {
