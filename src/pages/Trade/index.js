@@ -93,9 +93,21 @@ class Trade extends React.Component {
     return this.setState({ [event.target.name]: event.target.value });
   };
 
-  getMyPicks = () => 'Food:4';
+  getMyPayments = () => {
+    const {
+      myWater, myFood, myMedication, myAmmunition,
+    } = this.state;
 
-  getMyPayments = () => 'Water:3';
+    return `Water:${+myWater};Food:${+myFood};Medication:${+myMedication};Ammunition:${+myAmmunition}`;
+  };
+
+  getMyPicks = () => {
+    const {
+      yourWater, yourFood, yourMedication, yourAmmunition,
+    } = this.state;
+
+    return `Water:${+yourWater};Food:${+yourFood};Medication:${+yourMedication};Ammunition:${+yourAmmunition}`;
+  };
 
   handleConfirmTrade = async () => {
     const { yourId } = this.state;
