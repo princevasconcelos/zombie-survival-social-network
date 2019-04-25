@@ -1,21 +1,17 @@
 import React from 'react';
 import t from 'prop-types';
-import moment from 'moment';
 import { connect } from 'react-redux';
 
-import {
-  StyledSearch, Container, SearchResult, Block, Text,
-} from './styles';
+import { StyledSearch, Container, SearchResult } from './styles';
 
 import { saveQuery } from '../../stores/reducers/query';
 
 import Icon from '../Icon';
-import Loading from '../Loading';
-import Error from '../Error';
+
+import Result from './Result';
 
 class Search extends React.Component {
   state = {
-    value: '',
     showResults: false,
   };
 
@@ -40,11 +36,11 @@ class Search extends React.Component {
 
   handleChange = ({ target: { value } }) => {
     const {
-      survivors: { data },
       saveQuery,
+      survivors: { data },
     } = this.props;
+
     saveQuery({ query: value, data });
-    this.setState({ value });
   };
 
   handleFocus = () => {
@@ -61,30 +57,28 @@ class Search extends React.Component {
         loading, error, name, age, gender, id, created_at, updated_at,
       },
     } = this.props;
-    const { value, showResults } = this.state;
+    const { showResults } = this.state;
     return (
       <Container>
         <Icon name="search" />
         <StyledSearch
           data-testid="search"
-          value={value}
           placeholder="Search"
           onChange={this.handleChange}
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
         />
         <SearchResult isVisible={showResults}>
-          {loading && <Loading />}
-          {error && <Error msg={`No match for ${name}`} />}
-          {id && (
-            <Block>
-              <Text>{`Result for: "${name}"`}</Text>
-              <Text>{`${age} years - ${gender === 'M' ? 'Male' : 'Female'}`}</Text>
-              <Text>{`Created at: ${moment(created_at).format('DD/MM/YYYY')}`}</Text>
-              <Text>{`Updated at: ${moment(updated_at).format('DD/MM/YYYY')}`}</Text>
-            </Block>
-          )}
-          {!loading && !error && !id && <Text>Say my name</Text>}
+          <Result
+            loading={loading}
+            error={error}
+            id={id}
+            name={name}
+            age={age}
+            gender={gender}
+            create={created_at}
+            update={updated_at}
+          />
         </SearchResult>
       </Container>
     );
