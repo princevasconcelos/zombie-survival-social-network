@@ -56,9 +56,7 @@ const postTransaction = (formData, id) => fetch(`${baseUrl}/people/${id}/propert
   method: 'post',
   headers: postHeaders,
   body: formData,
-})
-  .then(response => response.json())
-  .catch(error => error);
+}).catch(error => error);
 
 const API = {
   get,
