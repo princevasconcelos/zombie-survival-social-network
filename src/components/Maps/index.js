@@ -16,6 +16,8 @@ const propTypes = {
   }).isRequired,
 
   markers: t.arrayOf(t.string),
+
+  center: t.string,
   readOnly: t.bool,
   zoom: t.number,
 };
@@ -26,22 +28,32 @@ const defaultProps = {
   onMarkerDragEnd: () => {},
 
   markers: [],
+
+  center: '',
   readOnly: false,
   zoom: 14,
 };
 
-const getLocations = markers => markers
-  .filter(e => !!e)
-  .map(r => r.replace(/[a-zA-Z()]|\s\(/g, ''))
-  .map((t) => {
-    const lonlat = t.split(' ');
-    return { lat: lonlat[0], lng: lonlat[1] };
-  });
+const parsePointToLonlat = (point) => {
+  const formattedPoint = point.replace(/[a-zA-Z()]|\s\(/g, '');
+  const lonlat = formattedPoint.split(' ');
+  return { lat: lonlat[0], lng: lonlat[1] };
+};
+
+const getLocations = markers => markers.filter(e => !!e).map(parsePointToLonlat);
 
 const Maps = ({
-  onReady, onMarkerDragEnd, google, markers, onMapClick, readOnly, zoom,
+  onReady,
+  onMarkerDragEnd,
+  google,
+  markers,
+  onMapClick,
+  readOnly,
+  zoom,
+  center,
 }) => {
   const locations = getLocations(markers);
+  const centerLonlat = parsePointToLonlat(center);
 
   return (
     <Container>
@@ -51,7 +63,7 @@ const Maps = ({
         clicable={!readOnly}
         onClick={onMapClick}
         onReady={onReady}
-        center={locations[0]}
+        center={centerLonlat}
       >
         {locations.length > 0
           && locations.map(mark => (
