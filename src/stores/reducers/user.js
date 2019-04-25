@@ -79,12 +79,28 @@ export const storeReportedSurvivor = payload => ({
 
 const userReducer = (state = INITIAL_STATE, action) => {
   const { payload, type } = action;
+  const {
+    data: { items },
+  } = state;
+
   switch (type) {
     case STORE_LOCATION:
       return { ...state, data: { ...state.data, lonlat: payload } };
 
     case STORE_ITEMS:
-      return { ...state, data: { ...state.data, items: payload } };
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          items: items.map((stateItem) => {
+            const newValue = payload.find(
+              payloadItem => payloadItem.item.name === stateItem.item.name,
+            );
+            if (newValue) return newValue;
+            return stateItem;
+          }),
+        },
+      };
 
     case REQUEST_CREATE_USER:
       return {
