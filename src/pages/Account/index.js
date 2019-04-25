@@ -1,6 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import t from 'prop-types';
+import { connect } from 'react-redux';
 
 import {
   storeLocation,
@@ -11,8 +11,6 @@ import {
 
 import API from '../../services/api';
 
-import { Container, Header, Floating } from './styles';
-
 import Profile from '../../components/Profile';
 import Icon from '../../components/Icon';
 import Button from '../../components/Button';
@@ -20,25 +18,29 @@ import Maps from '../../components/Maps';
 import Box from '../../components/Box';
 import Loading from '../../components/Loading';
 
+import { Container, Header, Floating } from './styles';
+
 class Account extends React.Component {
   state = {
     isEditing: false,
   };
 
   static propTypes = {
+    requestCreateUser: t.func.isRequired,
+    requestUserSuccess: t.func.isRequired,
+    requestUserFailed: t.func.isRequired,
+    storeLocation: t.func.isRequired,
+
     user: t.shape({
       data: t.object,
       error: t.objectOf(t.array),
       loading: t.bool,
     }).isRequired,
-    storeLocation: t.func.isRequired,
-    requestCreateUser: t.func.isRequired,
-    requestUserSuccess: t.func.isRequired,
-    requestUserFailed: t.func.isRequired,
 
     match: t.shape({
       params: t.objectOf(t.string),
     }).isRequired,
+
     history: t.shape({
       history: t.func,
     }).isRequired,
@@ -61,7 +63,7 @@ class Account extends React.Component {
     storeLocation(`POINT (${latitude} ${longitude})`);
   };
 
-  onLocationRejected = () => this.getUserLocation();
+  onLocationRejected = () => {};
 
   onMarkerChangeHandler = (mapProps, map, coords) => {
     const { storeLocation } = this.props;
@@ -84,6 +86,10 @@ class Account extends React.Component {
     const { history } = this.props;
     history.goBack();
   };
+
+  parseItemsFormData = items => items
+    .filter(e => e.quantity > 0)
+    .reduce((prev, curr) => `${prev}${curr.item.name}:${curr.quantity};`, '');
 
   handleSubmit = async ({
     age, genre, items, name,
@@ -108,12 +114,8 @@ class Account extends React.Component {
     if (isEditing) {
       response = await API.updateAccount(formData, id);
     } else {
-      formData.append(
-        'items',
-        items
-          .filter(e => e.quantity > 0)
-          .reduce((prev, curr) => `${prev}${curr.item.name}:${curr.quantity};`, ''),
-      );
+      const itemsFormData = this.parseItemsFormData(items);
+      formData.append('items', itemsFormData);
       response = await API.postSurvivor(formData);
     }
 
@@ -135,7 +137,9 @@ class Account extends React.Component {
     const {
       user: { data, error, loading },
     } = this.props;
+
     const { isEditing } = this.state;
+
     return (
       <Container>
         <Header>
@@ -162,9 +166,9 @@ class Account extends React.Component {
 
         <Box title="Select your current location" withBorder>
           <Maps
+            markers={[data.lonlat]}
             onReady={this.getUserLocation}
             onMarkerDragEnd={this.onMarkerChangeHandler}
-            markers={[data.lonlat]}
             onMapClick={this.onMapClickHandler}
           />
         </Box>
