@@ -83,6 +83,6 @@ Maps.propTypes = propTypes;
 Maps.defaultProps = defaultProps;
 
 export default GoogleApiWrapper({
-  apiKey: 'AIzaSyDlAR3FiEF2YJ-JYahQLh1Xh9gRLUUqijM',
+  apiKey: '',
   LoadingContainer: Loading,
 })(Maps);
