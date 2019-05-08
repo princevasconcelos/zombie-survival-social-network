@@ -1,9 +1,9 @@
 export const CHANGE_QUERY = 'CHANGE_QUERY';
 
-const REQUEST_QUERY_SUCCESS = 'REQUEST_QUERY_SUCCESS';
-const REQUEST_QUERY_FAILED = 'REQUEST_QUERY_FAILED';
+export const REQUEST_QUERY_SUCCESS = 'REQUEST_QUERY_SUCCESS';
+export const REQUEST_QUERY_FAILED = 'REQUEST_QUERY_FAILED';
 
-const INITIAL_STATE = {
+export const INITIAL_STATE = {
   name: '',
   loading: false,
   error: false,
